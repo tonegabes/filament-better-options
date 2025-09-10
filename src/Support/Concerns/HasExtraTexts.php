@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace ToneGabes\BetterOptions\Support\Concerns;
 
-use ToneGabes\BetterOptions\Support\Contracts\HasExtraText;
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
+use ToneGabes\BetterOptions\Support\Contracts\HasExtraText;
 use UnitEnum;
 
 trait HasExtraTexts
@@ -15,11 +15,11 @@ trait HasExtraTexts
     /**
      * @var array<string | Htmlable> | Arrayable<array-key, string | Htmlable> | string | Closure | null
      */
-    protected array | Arrayable | string | Closure | null $extraTexts = null;
+    protected array|Arrayable|string|Closure|null $extraTexts = null;
 
-    protected bool | Closure $isExtraTextVisible = true;
+    protected bool|Closure $isExtraTextVisible = true;
 
-    public function hiddenExtraText(bool | Closure $condition = true): static
+    public function hiddenExtraText(bool|Closure $condition = true): static
     {
         $this->isExtraTextVisible = ! $condition;
 
@@ -34,7 +34,7 @@ trait HasExtraTexts
     /**
      * @param  array<string | Htmlable> | Arrayable<array-key, string | Htmlable> | string | Closure | null  $extraTexts
      */
-    public function extraTexts(array | Arrayable | string | Closure | null $extraTexts): static
+    public function extraTexts(array|Arrayable|string|Closure|null $extraTexts): static
     {
         $this->extraTexts = $extraTexts;
 
@@ -56,7 +56,7 @@ trait HasExtraTexts
     /**
      * @param  array-key  $value
      */
-    public function getExtraText($value): string | Htmlable | null
+    public function getExtraText($value): string|Htmlable|null
     {
         return $this->getExtraTexts()[$value] ?? null;
     }
@@ -78,7 +78,7 @@ trait HasExtraTexts
             is_a($enum, HasExtraText::class, allow_string: true)
         ) {
             /** @var class-string<HasExtraText&UnitEnum> $enum */
-            $extraTexts = array_reduce($enum::cases(), function (array $carry, HasExtraText & UnitEnum $case): array {
+            $extraTexts = array_reduce($enum::cases(), function (array $carry, HasExtraText&UnitEnum $case): array {
                 if (filled($extraText = $case->getExtraText())) {
                     $carry[$case->value ?? $case->name] = $extraText;
                 }

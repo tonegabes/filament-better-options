@@ -8,5 +8,5 @@ use Illuminate\Contracts\Support\Htmlable;
 
 interface HasExtraText
 {
-    public function getExtraText(): string | Htmlable | null;
+    public function getExtraText(): string|Htmlable|null;
 }

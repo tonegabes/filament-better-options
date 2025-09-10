@@ -14,7 +14,7 @@ trait HasOptionIcon
 {
     use HasIcons;
 
-    protected bool | Closure $isIconVisible = true;
+    protected bool|Closure $isIconVisible = true;
 
     protected ?IconPosition $iconPosition = null;
 
@@ -28,7 +28,7 @@ trait HasOptionIcon
         return (bool) $this->evaluate($this->isIconVisible);
     }
 
-    public function hiddenIcon(bool | Closure $condition = true): static
+    public function hiddenIcon(bool|Closure $condition = true): static
     {
         $this->isIconVisible = ! $condition;
 
@@ -46,7 +46,7 @@ trait HasOptionIcon
     /**
      * @param  array-key  $value
      */
-    public function getOptionIcon(mixed $value): string | BackedEnum | Htmlable | null
+    public function getOptionIcon(mixed $value): string|BackedEnum|Htmlable|null
     {
         return $this->getIcon($value);
     }

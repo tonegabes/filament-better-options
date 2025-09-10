@@ -13,22 +13,22 @@ use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 trait HasIndicator
 {
-    protected bool | Closure $isIndicatorPartiallyHidden = false;
+    protected bool|Closure $isIndicatorPartiallyHidden = false;
 
-    protected bool | Closure $isIndicatorVisible = true;
+    protected bool|Closure $isIndicatorVisible = true;
 
     protected ?IconPosition $indicatorPosition = null;
 
-    protected string | BackedEnum | Htmlable | null $idleIndicator = null;
+    protected string|BackedEnum|Htmlable|null $idleIndicator = null;
 
-    protected string | BackedEnum | Htmlable | null $selectedIndicator = null;
+    protected string|BackedEnum|Htmlable|null $selectedIndicator = null;
 
     public function isIndicatorPartiallyHidden(): bool
     {
         return (bool) $this->evaluate($this->isIndicatorPartiallyHidden);
     }
 
-    public function partiallyHiddenIndicator(bool | Closure $condition = true): static
+    public function partiallyHiddenIndicator(bool|Closure $condition = true): static
     {
         $this->isIndicatorPartiallyHidden = $condition;
 
@@ -40,7 +40,7 @@ trait HasIndicator
         return (bool) $this->evaluate($this->isIndicatorVisible);
     }
 
-    public function hiddenIndicator(bool | Closure $condition = true): static
+    public function hiddenIndicator(bool|Closure $condition = true): static
     {
         $this->isIndicatorVisible = ! $condition;
 
@@ -91,27 +91,27 @@ trait HasIndicator
         return $this;
     }
 
-    public function defaultIdleIndicator(): string | BackedEnum | Htmlable
+    public function defaultIdleIndicator(): string|BackedEnum|Htmlable
     {
         return Phosphor::CircleThin->getLabel();
     }
 
-    public function defaultSelectedIndicator(): string | BackedEnum | Htmlable
+    public function defaultSelectedIndicator(): string|BackedEnum|Htmlable
     {
         return Phosphor::RecordFill->getLabel();
     }
 
-    public function getIdleIndicator(): string | BackedEnum | Htmlable
+    public function getIdleIndicator(): string|BackedEnum|Htmlable
     {
         return $this->idleIndicator ?? $this->defaultIdleIndicator();
     }
 
-    public function getSelectedIndicator(): string | BackedEnum | Htmlable
+    public function getSelectedIndicator(): string|BackedEnum|Htmlable
     {
         return $this->selectedIndicator ?? $this->defaultSelectedIndicator();
     }
 
-    public function idleIndicator(string | BackedEnum | Htmlable | null $idleIndicator): static
+    public function idleIndicator(string|BackedEnum|Htmlable|null $idleIndicator): static
     {
         if ($idleIndicator instanceof BackedEnum && $idleIndicator instanceof HasLabel) {
             $idleIndicator = $idleIndicator->getLabel();
@@ -122,7 +122,7 @@ trait HasIndicator
         return $this;
     }
 
-    public function selectedIndicator(string | BackedEnum | Htmlable | null $selectedIndicator): static
+    public function selectedIndicator(string|BackedEnum|Htmlable|null $selectedIndicator): static
     {
         if ($selectedIndicator instanceof BackedEnum && $selectedIndicator instanceof HasLabel) {
             $selectedIndicator = $selectedIndicator->getLabel();

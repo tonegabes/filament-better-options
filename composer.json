@@ -51,13 +51,6 @@
     "analyse": "vendor/bin/phpstan analyse",
     "format": "vendor/bin/pint"
   },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "pestphp/pest-plugin": true,
-      "phpstan/extension-installer": true
-    }
-  },
   "extra": {
     "laravel": {
       "providers": [
@@ -65,6 +58,6 @@
       ]
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true
 }
