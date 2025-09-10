@@ -21,6 +21,7 @@ class RadioCards extends Field implements CanDisableOptions
     use Concerns\CanFixIndistinctState;
     use Concerns\HasDescriptions;
     use Concerns\HasExtraInputAttributes;
+    use Concerns\HasExtraAttributes;
     use Concerns\HasGridDirection;
     use Concerns\HasOptions;
     use HasColumns;
@@ -35,8 +36,6 @@ class RadioCards extends Field implements CanDisableOptions
 
     protected bool|Closure $isDescriptionHidden = false;
 
-    protected bool|Closure $isItemsCenter = false;
-
     public function defaultIconPosition(): IconPosition
     {
         return IconPosition::Before;
@@ -49,12 +48,14 @@ class RadioCards extends Field implements CanDisableOptions
 
     public function isItemsCenter(): bool
     {
-        return (bool) $this->evaluate($this->isItemsCenter);
+        return (bool) $this->getExtraAttributeBag()->get('isCentered');
     }
 
     public function itemsCenter(bool|Closure $condition = true): static
     {
-        $this->isItemsCenter = $condition;
+        $this->extraAttributes([
+            'isCentered' => $condition,
+        ], merge: true);
 
         return $this;
     }

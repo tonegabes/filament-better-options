@@ -29,6 +29,6 @@ class BetterOptionsServiceProvider extends PackageServiceProvider
             AlpineComponent::make('checkbox', __DIR__.'/../resources/js/checkbox.js')
                 ->loadedOnRequest(),
             Css::make('better-options-styles', __DIR__.'/../resources/css/index.css'),
-        ], 'tonegabes/filament-better-options');
+        ], 'tonegabes/better-options');
     }
 }

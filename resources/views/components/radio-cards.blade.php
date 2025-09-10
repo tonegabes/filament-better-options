@@ -2,6 +2,7 @@
     use Filament\Support\Enums\GridDirection;
 
     $extraInputAttributeBag = $getExtraInputAttributeBag();
+    $extraAttributeBag = $getExtraAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
     $gridDirection = $getGridDirection() ?? GridDirection::Row;
     $id = $getId();
@@ -18,7 +19,7 @@
 >
     <div
         {{
-            $getExtraAttributeBag()
+            $extraAttributeBag
                 ->grid($getColumns(), $gridDirection)
                 ->class(['fi-fo-radio-cards'])
         }}
@@ -41,7 +42,7 @@
                 @class([
                     'fi-fo-radio-card group/radio-card',
                     'fi-invalid' => $errors->has($statePath),
-                    'is-centered' => $isItemsCenter(),
+                    'is-centered' => $extraAttributeBag->get('isCentered'),
                 ])
                 x-data="{ isSelected: false }"
                 x-init="$watch(
@@ -54,11 +55,12 @@
                 for="{{ $itemId }}"
             >
                 @if ($isIndicatorBefore() && $isIndicatorVisible())
-                    <x-forms.radio-indicator
+                    <x-option-indicator
                         ::is-selected="isSelected"
                         :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
-                        :default-indicator="$getIdleIndicator()"
+                        :idle-indicator="$getIdleIndicator()"
                         :selected-indicator="$getSelectedIndicator()"
+                        class="fi-fo-radio-card__indicator"
                     />
                 @endif
 
@@ -89,11 +91,12 @@
                 @endif
 
                 @if ($isIndicatorAfter() && $isIndicatorVisible())
-                    <x-forms.radio-indicator
+                    <x-option-indicator
                         ::is-selected="isSelected"
                         :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
-                        :default-indicator="$getIdleIndicator()"
+                        :idle-indicator="$getIdleIndicator()"
                         :selected-indicator="$getSelectedIndicator()"
+                        class="fi-fo-radio-card__indicator"
                     />
                 @endif
 

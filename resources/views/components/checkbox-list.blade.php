@@ -9,7 +9,7 @@
     $isDisabled = $isDisabled();
     $isHtmlAllowed = $isHtmlAllowed();
     $isSearchable = $isSearchable();
-    $jsComponentSrc = FilamentAsset::getAlpineComponentSrc('checkbox');
+    $jsComponentSrc = FilamentAsset::getAlpineComponentSrc('checkbox', 'tonegabes/better-options');
     $livewireKey = $getLivewireKey();
     $options = $getOptions();
     $statePath = $getStatePath();
@@ -113,11 +113,12 @@
                     />
 
                     @if ($isIndicatorBefore() && $isIndicatorVisible())
-                        <x-forms.checkbox-indicator
+                        <x-option-indicator
                             ::is-selected="isSelected"
                             :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
-                            :default-indicator="$getIdleIndicator()"
+                            :idle-indicator="$getIdleIndicator()"
                             :selected-indicator="$getSelectedIndicator()"
+                            class="fi-fo-checkbox-option__indicator"
                         />
                     @endif
 
@@ -154,11 +155,12 @@
                     @endif
 
                     @if ($isIndicatorAfter() && $isIndicatorVisible())
-                        <x-forms.checkbox-indicator
+                        <x-option-indicator
                             ::is-selected="isSelected"
                             :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
-                            :default-indicator="$getIdleIndicator()"
+                            :idle-indicator="$getIdleIndicator()"
                             :selected-indicator="$getSelectedIndicator()"
+                            class="fi-fo-checkbox-option__indicator"
                         />
                     @endif
                 </label>

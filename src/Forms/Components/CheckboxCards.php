@@ -22,8 +22,6 @@ class CheckboxCards extends CheckboxList
     use HasIndicator;
     use HasOptionIcon;
 
-    protected bool|Closure $isItemsCenter = false;
-
     protected string $view = 'better-options::components.checkbox-cards';
 
     public function defaultIndicatorPosition(): IconPosition
@@ -48,12 +46,14 @@ class CheckboxCards extends CheckboxList
 
     public function isItemsCenter(): bool
     {
-        return (bool) $this->evaluate($this->isItemsCenter);
+        return (bool) $this->getExtraAttributeBag()->get('isCentered');
     }
 
     public function itemsCenter(bool|Closure $condition = true): static
     {
-        $this->isItemsCenter = $condition;
+        $this->extraAttributes([
+            'isCentered' => $condition,
+        ], merge: true);
 
         return $this;
     }

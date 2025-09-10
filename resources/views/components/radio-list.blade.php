@@ -55,11 +55,12 @@
                 <div class="fi-fo-radio-item__content">
 
                     @if ($isIndicatorBefore() && $isIndicatorVisible())
-                        <x-forms.radio-indicator
+                        <x-option-indicator
                             ::is-selected="isSelected"
                             :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
-                            :default-indicator="$getIdleIndicator()"
+                            :idle-indicator="$getIdleIndicator()"
                             :selected-indicator="$getSelectedIndicator()"
+                            class="fi-fo-radio-item__indicator"
                         />
                     @endif
 
@@ -89,11 +90,12 @@
                 @endif
 
                 @if ($isIndicatorAfter() && $isIndicatorVisible())
-                    <x-forms.radio-indicator
+                    <x-option-indicator
                         ::is-selected="isSelected"
                         :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
-                        :default-indicator="$getIdleIndicator()"
+                        :idle-indicator="$getIdleIndicator()"
                         :selected-indicator="$getSelectedIndicator()"
+                        class="fi-fo-radio-item__indicator"
                     />
                 @endif
 

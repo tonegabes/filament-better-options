@@ -33,8 +33,6 @@ class RadioList extends Field implements CanDisableOptions
 
     protected bool|Closure $isDescriptionHidden = false;
 
-    protected bool|Closure $isItemsCenter = false;
-
     public function defaultIconPosition(): IconPosition
     {
         return IconPosition::After;
@@ -43,18 +41,6 @@ class RadioList extends Field implements CanDisableOptions
     public function defaultIndicatorPosition(): IconPosition
     {
         return IconPosition::Before;
-    }
-
-    public function isItemsCenter(): bool
-    {
-        return (bool) $this->evaluate($this->isItemsCenter);
-    }
-
-    public function itemsCenter(bool|Closure $condition = true): static
-    {
-        $this->isItemsCenter = $condition;
-
-        return $this;
     }
 
     public function isDescriptionHidden(): bool

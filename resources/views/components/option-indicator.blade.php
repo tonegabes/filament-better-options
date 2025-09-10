@@ -1,24 +1,25 @@
 @props([
     'isSelected',
     'isIndicatorPartiallyHidden',
-    'defaultIndicator',
+    'idleIndicator',
     'selectedIndicator',
+    'class' => 'fi-fo-option-indicator',
 ])
 
 <template x-if="isSelected">
     <x-icon
         :name="$selectedIndicator"
         @class([
-            'fi-fo-radio__indicator',
+            $class,
             'is-indicator-partially-hidden' => $isIndicatorPartiallyHidden(),
         ])
     />
 </template>
 <template x-if="! isSelected">
     <x-icon
-        :name="$defaultIndicator"
+        :name="$idleIndicator"
         @class([
-            'fi-fo-radio__indicator',
+            $class,
             'is-indicator-partially-hidden' => $isIndicatorPartiallyHidden(),
         ])
     />

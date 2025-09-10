@@ -20,7 +20,7 @@
       @apply bg-gray-50 dark:bg-white/5 transform scale-[1.02];
     }
 
-    & .fi-fo-radio__indicator {
+    & .fi-fo-radio-card__indicator {
       @apply size-5 fill-gray-400 shrink-0 transition-opacity duration-400 ease-in-out mt-1;
     }
 
@@ -75,7 +75,7 @@
     &.fi-invalid {
       @apply ring-1 ring-red-300;
 
-      & .fi-fo-radio__indicator {
+      & .fi-fo-radio-card__indicator {
         @apply fill-red-500;
       }
     }
@@ -87,7 +87,7 @@
         @apply fill-primary transition-colors duration-200;
       }
 
-      & .fi-fo-radio__indicator {
+      & .fi-fo-radio-card__indicator {
         @apply opacity-100 fill-primary;
       }
 
