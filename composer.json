@@ -1,0 +1,69 @@
+{
+  "name": "tonegabes/filament-better-options",
+  "description": "Filament plugin that adds better radio and checkbox options in forms components.",
+  "keywords": [
+    "checkbox",
+    "filament",
+    "forms",
+    "laravel",
+    "plugin",
+    "php",
+    "tonegabes"
+  ],
+  "homepage": "https://github.com/tonegabes/filament-better-options",
+  "support": {
+    "issues": "https://github.com/tonegabes/filament-better-options/issues",
+    "source": "https://github.com/tonegabes/filament-better-options"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tone Gabes",
+      "email": "tonegabes@gmail.com",
+      "role": "Developer",
+      "homepage": "https://tonegabes.com"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "filament/forms": "^4.0",
+    "spatie/laravel-package-tools": "^1.15.0",
+    "tonegabes/filament-phosphor-icons": "^1.0"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.0",
+    "phpstan/phpstan": "^1.12",
+    "phpstan/phpstan-deprecation-rules": "^1.0",
+    "phpstan/phpstan-phpunit": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ToneGabes\\BetterOptions\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ToneGabes\\BetterOptions\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "format": "vendor/bin/pint"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ToneGabes\\BetterOptions\\BetterOptionsServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

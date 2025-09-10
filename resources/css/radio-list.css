@@ -1,0 +1,79 @@
+.fi-fo-radio-list {
+  @apply flex flex-col shadow-xs rounded-lg divide-y divide-gray-200 border border-gray-200;
+
+  & .fi-grid-direction-col {
+    /* @apply -mt-4; */
+
+    & .fi-fo-radio-item {
+      @apply break-inside-avoid;
+    }
+  }
+
+  & .fi-fo-radio-item:first-child {
+    @apply rounded-t-lg;
+  }
+
+  & .fi-fo-radio-item:last-child {
+    @apply rounded-b-lg;
+  }
+
+  & .fi-fo-radio-item {
+    @apply flex items-center justify-between gap-4 p-4 dark:border-white/20 hover:ring hover:ring-primary cursor-pointer;
+
+    & .fi-fo-radio-item__icon {
+      @apply size-10 fill-gray-400 dark:fill-white/30 shrink-0;
+    }
+
+    & .fi-fo-radio-item__content {
+      @apply flex items-center grow gap-4;
+    }
+
+    & .fi-fo-radio-item__label {
+      @apply font-medium text-gray-900 dark:text-gray-50;
+    }
+
+    & .fi-fo-radio-item__description {
+      @apply font-normal text-gray-500 dark:text-gray-400 -mt-1;
+    }
+
+    & .fi-fo-radio-item__extra {
+      @apply font-medium text-black dark:text-white;
+    }
+
+    & .fi-fo-radio__indicator {
+      @apply size-5 fill-gray-400 shrink-0 transition-opacity duration-400 ease-in-out;
+    }
+
+    & .is-indicator-partially-hidden {
+      @apply opacity-0 group-hover/radio-item:opacity-30;
+    }
+
+    & .fi-radio-input {
+      @apply shrink-0;
+    }
+
+    &.fi-invalid {
+      @apply ring-1 ring-red-300;
+
+      & .fi-fo-radio__indicator {
+        @apply fill-red-500;
+      }
+    }
+
+    &.is-selected {
+      @apply bg-primary/10 ring-primary ring-2;
+
+      & .fi-fo-radio-item__icon {
+        @apply fill-primary;
+      }
+
+      & .fi-fo-radio__indicator {
+        @apply opacity-100 fill-primary;
+      }
+
+      & .is-indicator-partially-hidden {
+        @apply opacity-100;
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+.fi-fo-checkbox-list {
+  @apply flex flex-col;
+
+  & .fi-fo-checkbox-list-search-input-wrp {
+    @apply mb-4;
+  }
+
+  & .fi-fo-checkbox-actions {
+    @apply mb-2;
+  }
+
+  & .fi-fo-checkbox-options {
+    @apply flex flex-col divide-y divide-gray-200 dark:divide-gray-800 border border-gray-200 dark:border-gray-800 rounded-lg shadow-xs;
+
+    & .fi-fo-checkbox-option:first-child {
+      @apply rounded-t-lg;
+    }
+
+    & .fi-fo-checkbox-option:last-child {
+      @apply rounded-b-lg;
+    }
+
+    & .fi-fo-checkbox-option {
+      @apply flex gap-3 items-center p-4 cursor-pointer;
+
+      &:hover {
+        @apply ring-1 ring-primary;
+      }
+
+      & .fi-fo-checkbox-option__indicator {
+        @apply size-5 fill-gray-400 shrink-0 transition-opacity duration-400 ease-in-out;
+      }
+
+      & .fi-fo-checkbox-option__icon {
+        @apply size-10 text-gray-400 dark:text-gray-700 shrink-0;
+      }
+
+      & .fi-checkbox-input {
+        @apply shrink-0;
+      }
+
+      & .fi-fo-checkbox-option__content {
+        @apply flex grow text-sm items-center;
+
+        & .fi-fo-checkbox-option__header {
+          @apply flex flex-col grow;
+        }
+
+        & .fi-fo-checkbox-option__label {
+          @apply overflow-hidden font-medium break-words text-gray-950 dark:text-white;
+        }
+
+        & .fi-fo-checkbox-option__description {
+          @apply text-gray-500 dark:text-gray-400;
+        }
+
+        & .fi-fo-checkbox-option__extra {
+          @apply font-medium text-gray-900 dark:text-gray-50;
+        }
+      }
+
+      &.fi-invalid {
+        @apply ring-1 ring-red-300;
+
+        & .fi-fo-checkbox-option__indicator {
+          @apply fill-red-500;
+        }
+      }
+
+      &.is-selected {
+        @apply bg-primary/10 ring-2 ring-primary;
+
+        & .fi-fo-checkbox-option__indicator {
+          @apply fill-primary;
+        }
+
+        & .fi-fo-checkbox-option__icon {
+          @apply text-primary;
+        }
+      }
+    }
+  }
+
+  & .fi-fo-checkbox-list-no-search-results-message {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+}

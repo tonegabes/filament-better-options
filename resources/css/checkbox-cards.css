@@ -1,0 +1,105 @@
+.fi-fo-checkbox-card {
+  @apply grid;
+
+  & .fi-fo-checkbox-list-search-input-wrp {
+    @apply mb-4;
+  }
+
+  & .fi-fo-checkbox-actions {
+    @apply mb-2;
+  }
+
+  & .fi-fo-checkbox-options {
+    @apply gap-2;
+
+    &.fi-grid-direction-col {
+      /* @apply -mt-4; */
+
+      & > .fi-fo-checkbox-option {
+        @apply break-inside-avoid;
+      }
+    }
+
+    & .fi-fo-checkbox-option {
+      @apply flex gap-3 p-4 border border-gray-200 dark:border-white/20 rounded-lg cursor-pointer shadow-xs transition-all duration-200 ease-in-out;
+
+      &:hover {
+        @apply ring-1 ring-primary;
+      }
+
+      &:hover:not(.is-selected) {
+        @apply bg-gray-50 dark:bg-white/5 transform scale-[1.02];
+      }
+
+      & .fi-fo-checkbox-option__indicator {
+        @apply size-5 mt-1 fill-gray-400 shrink-0 transition-opacity duration-400 ease-in-out;
+      }
+
+      & .fi-fo-checkbox-option__icon {
+        @apply size-10 text-gray-400 dark:text-gray-700 shrink-0 mt-1;
+      }
+
+      & .fi-checkbox-input {
+        @apply mt-1 shrink-0;
+      }
+
+      & .fi-fo-checkbox-option__content {
+        @apply grid grow text-sm leading-6;
+
+        & .fi-fo-checkbox-option__header {
+          @apply flex flex-col grow;
+        }
+
+        & .fi-fo-checkbox-option__label {
+          @apply overflow-hidden font-medium break-words text-gray-950 dark:text-white;
+        }
+
+        & .fi-fo-checkbox-option__description {
+          @apply text-gray-500 dark:text-gray-400;
+        }
+
+        & .fi-fo-checkbox-option__extra {
+          @apply font-medium text-gray-900 dark:text-gray-50 mt-4;
+        }
+      }
+
+      &.is-centered {
+        @apply items-center;
+
+        & .fi-fo-checkbox-option__content {
+          @apply flex items-center gap-2;
+        }
+
+        & .fi-fo-checkbox-option__indicator,
+        & .fi-fo-checkbox-option__icon,
+        & .fi-fo-checkbox-option__extra {
+          @apply mt-0;
+        }
+      }
+
+      &.fi-invalid {
+        @apply ring-1 ring-red-300;
+
+        & .fi-fo-checkbox-option__indicator {
+          @apply fill-red-500;
+        }
+      }
+
+      &.is-selected {
+        @apply bg-primary/10 ring-2 ring-primary;
+
+        & .fi-fo-checkbox-option__indicator {
+          @apply fill-primary;
+        }
+
+        & .fi-fo-checkbox-option__icon {
+          @apply text-primary;
+        }
+      }
+    }
+  }
+
+  & .fi-fo-checkbox-list-no-search-results-message {
+    @apply text-sm text-gray-500 dark:text-gray-400;
+  }
+}
