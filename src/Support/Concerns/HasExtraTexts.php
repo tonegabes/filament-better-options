@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ToneGabes\BetterOptions\Support\Concerns;
 
-use ToneGabes\BetterOptions\Contracts\HasExtraText;
+use ToneGabes\BetterOptions\Support\Contracts\HasExtraText;
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;
