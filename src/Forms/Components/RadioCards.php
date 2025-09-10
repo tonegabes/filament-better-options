@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Components\Forms;
+namespace ToneGabes\BetterOptions\Forms\Components;
 
-use App\Traits\HasExtraTexts;
-use App\Traits\HasIndicator;
-use App\Traits\HasOptionIcon;
+use ToneGabes\BetterOptions\Support\Concerns\HasExtraTexts;
+use ToneGabes\BetterOptions\Support\Concerns\HasIndicator;
+use ToneGabes\BetterOptions\Support\Concerns\HasOptionIcon;
 use Closure;
 use Filament\Forms\Components\Concerns;
 use Filament\Forms\Components\Contracts\CanDisableOptions;
@@ -31,7 +31,7 @@ class RadioCards extends Field implements CanDisableOptions
     /**
      * @var view-string
      */
-    protected string $view = 'filament.components.forms.radio-cards';
+    protected string $view = 'components.radio-cards';
 
     protected bool | Closure $isDescriptionHidden = false;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace ToneGabes\BetterOptions\Support\Concerns;
 
-use App\Contracts\HasExtraText;
+use ToneGabes\BetterOptions\Contracts\HasExtraText;
 use Closure;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Htmlable;

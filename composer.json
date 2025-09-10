@@ -1,6 +1,7 @@
 {
   "name": "tonegabes/filament-better-options",
-  "description": "Filament plugin that adds better radio and checkbox options in forms components.",
+  "description": "Filament form components for better radio and checkbox options.",
+  "type": "library",
   "keywords": [
     "checkbox",
     "filament",
