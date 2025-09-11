@@ -16,10 +16,10 @@ use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 class CheckboxList extends BaseCheckboxList
 {
+    use HasBetterDescriptions;
     use HasExtraTexts;
     use HasIndicator;
     use HasOptionIcon;
-    use HasBetterDescriptions;
 
     protected string $view = 'better-options::components.checkbox-list';
 

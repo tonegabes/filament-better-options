@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ToneGabes\BetterOptions\Support\Concerns;
+namespace ToneGabes\BetterOptions\Concerns;
 
 use BackedEnum;
 use Closure;

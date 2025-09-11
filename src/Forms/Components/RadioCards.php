@@ -33,9 +33,6 @@ class RadioCards extends Field implements CanDisableOptions
     use HasItemsCenter;
     use HasOptionIcon;
 
-    /**
-     * @var view-string
-     */
     protected string $view = 'better-options::components.radio-cards';
 
     public function defaultIconPosition(): IconPosition

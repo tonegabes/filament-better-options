@@ -27,9 +27,6 @@ class RadioList extends Field implements CanDisableOptions
     use HasIndicator;
     use HasOptionIcon;
 
-    /**
-     * @var view-string
-     */
     protected string $view = 'better-options::components.radio-list';
 
     public function defaultIconPosition(): IconPosition

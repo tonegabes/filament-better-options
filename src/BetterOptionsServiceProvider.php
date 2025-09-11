@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ToneGabes\BetterOptions;
 
 use Filament\Support\Assets\AlpineComponent;
@@ -26,10 +28,10 @@ class BetterOptionsServiceProvider extends PackageServiceProvider
         FilamentAsset::register([
             AlpineComponent::make(
                 'better-checkbox',
-                __DIR__.'/../resources/js/better-checkbox.js',
+                __DIR__ . '/../resources/js/better-checkbox.js',
             )->loadedOnRequest(),
 
-            Css::make('better-options', __DIR__.'/../resources/dist/better-options.css'),
+            Css::make('better-options', __DIR__ . '/../resources/dist/better-options.css'),
         ], 'tonegabes/better-options');
     }
 }
