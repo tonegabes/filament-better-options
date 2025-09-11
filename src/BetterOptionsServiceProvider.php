@@ -14,13 +14,13 @@ class BetterOptionsServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'better-options';
 
-    public static string $viewNamespace = 'better-options';
-
     public function configurePackage(Package $package): void
     {
         $package
             ->name(static::$name)
-            ->hasViews(static::$viewNamespace);
+            ->hasViews(static::$name)
+            ->hasAssets()
+            ->hasConfigFile(static::$name);
     }
 
     public function packageBooted(): void

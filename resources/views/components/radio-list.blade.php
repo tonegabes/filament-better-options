@@ -38,14 +38,16 @@
                 x-data="{ isSelected: false }"
                 x-init="$watch(
                     '$wire.{{ $statePath }}',
-                    value => isSelected = value === '{{ $value }}'
+                    value => isSelected = (value ?? '') === '{{ $value }}'
                 )"
                 :class="{ 'is-selected': isSelected }"
+                role="radio"
                 :aria-checked="isSelected"
                 :aria-selected="isSelected"
                 for="{{ $itemId }}"
+                :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
+                tabindex="0"
             >
-                <div class="fi-fo-radio-item__content">
 
                     @if ($isIndicatorBefore() && $isIndicatorVisible())
                         <x-better-options::option-indicator
@@ -61,6 +63,7 @@
                         @svg($getOptionIcon($value), ['class' => 'fi-fo-radio-item__icon'])
                     @endif
 
+                <div class="fi-fo-radio-item__content">
                     <div class="fi-fo-radio-item__header">
                         <p class="fi-fo-radio-item__label">{{ $label }}</p>
 

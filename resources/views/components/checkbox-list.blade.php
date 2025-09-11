@@ -1,7 +1,5 @@
 @php
     use Filament\Support\Facades\FilamentAsset;
-    use Filament\Forms\View\FormsIconAlias;
-    use ToneGabes\Filament\Icons\Enums\Phosphor;
 
     $extraInputAttributeBag = $getExtraInputAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
@@ -28,46 +26,20 @@
         })"
         {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-list']) }}
     >
-        @if (! $isDisabled)
-            @if ($isSearchable)
-                <x-filament::input.wrapper
-                    inline-prefix
-                    :prefix-icon="Phosphor::MagnifyingGlass"
-                    :prefix-icon-alias="FormsIconAlias::COMPONENTS_CHECKBOX_LIST_SEARCH_FIELD"
-                    class="fi-fo-checkbox-list-search-input-wrp"
-                >
-                    <input
-                        placeholder="{{ $getSearchPrompt() }}"
-                        type="search"
-                        x-model.debounce.{{ $getSearchDebounce() }}="search"
-                        class="fi-input fi-input-has-inline-prefix"
-                    />
-                </x-filament::input.wrapper>
-            @endif
 
-            @if ($isBulkToggleable && count($options))
-                <div
-                    x-cloak
-                    class="fi-fo-checkbox-actions"
-                    wire:key="{{ $livewireKey }}.actions"
-                >
-                    <span
-                        x-show="! areAllCheckboxesChecked"
-                        x-on:click="toggleAllCheckboxes()"
-                        wire:key="{{ $livewireKey }}.actions.select-all"
-                    >
-                        {{ $getAction('selectAll') }}
-                    </span>
+        @if ($isSearchable && ! $isDisabled)
+            <x-better-options::search-input
+                :search-prompt="$getSearchPrompt()"
+                :search-debounce="$getSearchDebounce()"
+            />
+        @endif
 
-                    <span
-                        x-show="areAllCheckboxesChecked"
-                        x-on:click="toggleAllCheckboxes()"
-                        wire:key="{{ $livewireKey }}.actions.deselect-all"
-                    >
-                        {{ $getAction('deselectAll') }}
-                    </span>
-                </div>
-            @endif
+        @if (! $isDisabled && $isBulkToggleable && count($options))
+            <x-better-options::bulk-actions
+                :livewire-key="$livewireKey"
+                :select-all-action="$getAction('selectAll')"
+                :deselect-all-action="$getAction('deselectAll')"
+            />
         @endif
 
         <div
@@ -80,6 +52,10 @@
             }}
         >
             @forelse ($options as $value => $label)
+                @php
+                    $itemId = $getId()."-".$value;
+                @endphp
+
                 <label
                     wire:key="{{ $livewireKey }}.options.{{ $value }}"
 
@@ -88,17 +64,26 @@
                     @endif
 
                     x-data="{ isSelected: false }"
-                    x-init="$watch(
-                        '$wire.{{ $statePath }}',
-                        value => isSelected = value.includes('{{ $value }}')
-                    )"
+                    x-init="
+                        $watch(
+                            '$wire.{{ $statePath }}',
+                            value => {
+                                value = Array.isArray(value) ? value : [];
+                                isSelected = value.includes('{{ $value }}')
+                            }
+                        )
+                    "
                     @class([
                         'fi-fo-checkbox-option',
                         'fi-invalid' => $errors->has($statePath),
                     ])
                     :class="{ 'is-selected': isSelected }"
+                    role="checkbox"
                     :aria-checked="isSelected"
                     :aria-selected="isSelected"
+                    :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
+                    :for="$itemId"
+                    tabindex="0"
                 >
                     <input
                         type="checkbox"
@@ -111,6 +96,7 @@
                                     'wire:loading.attr' => 'disabled',
                                     $wireModelAttribute => $statePath,
                                     'x-on:change' => $isBulkToggleable ? 'checkIfAllCheckboxesAreChecked()' : null,
+                                    'id' => $itemId,
                                 ], escape: false)
                         }}
                     />
@@ -129,29 +115,14 @@
                         @svg($getOptionIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
                     @endif
 
-                    <div class="fi-fo-checkbox-option__content">
-                        <div class="fi-fo-checkbox-option__header">
-                            <span class="fi-fo-checkbox-option__label">
-                                @if ($isHtmlAllowed)
-                                    {!! $label !!}
-                                @else
-                                    {{ $label }}
-                                @endif
-                            </span>
-
-                            @if ($hasDescription($value) && $isDescriptionVisible())
-                                <p class="fi-fo-checkbox-option__description">
-                                    {{ $getDescription($value) }}
-                                </p>
-                            @endif
-                        </div>
-
-                        @if ($hasExtraText($value) && $isExtraTextVisible())
-                            <p class="fi-fo-checkbox-option__extra">
-                            {{ $getExtraText($value) }}
-                            </p>
-                        @endif
-                    </div>
+                    <x-better-options::checkbox-content
+                        :label="$label"
+                        :description="$getDescription($value)"
+                        :extra-text="$getExtraText($value)"
+                        :is-html-allowed="$isHtmlAllowed"
+                        :show-description="$hasDescription($value) && $isDescriptionVisible()"
+                        :show-extra-text="$hasExtraText($value) && $isExtraTextVisible()"
+                    />
 
                     @if ($hasIconAfter() && $isIconVisible())
                         @svg($getOptionIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
