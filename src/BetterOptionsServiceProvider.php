@@ -26,9 +26,9 @@ class BetterOptionsServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         FilamentAsset::register([
-            AlpineComponent::make('checkbox', __DIR__.'/../resources/js/checkbox.js')
+            AlpineComponent::make('better-checkbox', __DIR__.'/../resources/js/better-checkbox.js')
                 ->loadedOnRequest(),
-            Css::make('better-options-styles', __DIR__.'/../resources/css/index.css'),
+            Css::make('better-options', __DIR__.'/../resources/dist/better-options.css'),
         ], 'tonegabes/better-options');
     }
 }

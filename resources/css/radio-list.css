@@ -18,7 +18,7 @@
   }
 
   & .fi-fo-radio-item {
-    @apply flex items-center justify-between gap-4 p-4 dark:border-white/20 hover:ring hover:ring-primary cursor-pointer;
+    @apply flex items-center justify-between gap-4 p-4 dark:border-white/20 hover:ring hover:ring-primary-500 cursor-pointer;
 
     & .fi-fo-radio-item__icon {
       @apply size-10 fill-gray-400 dark:fill-white/30 shrink-0;
@@ -61,14 +61,14 @@
     }
 
     &.is-selected {
-      @apply bg-primary/10 ring-primary ring-2;
+      @apply bg-primary-500/10 ring-primary-500 ring-2;
 
       & .fi-fo-radio-item__icon {
-        @apply fill-primary;
+        @apply fill-primary-500;
       }
 
       & .fi-fo-radio__indicator {
-        @apply opacity-100 fill-primary;
+        @apply opacity-100 fill-primary-500;
       }
 
       & .is-indicator-partially-hidden {

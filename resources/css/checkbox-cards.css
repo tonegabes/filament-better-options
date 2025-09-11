@@ -24,7 +24,7 @@
       @apply flex gap-3 p-4 border border-gray-200 dark:border-white/20 rounded-lg cursor-pointer shadow-xs transition-all duration-200 ease-in-out;
 
       &:hover {
-        @apply ring-1 ring-primary;
+        @apply ring-1 ring-primary-500;
       }
 
       &:hover:not(.is-selected) {
@@ -86,14 +86,14 @@
       }
 
       &.is-selected {
-        @apply bg-primary/10 ring-2 ring-primary;
+        @apply bg-primary-500/10 ring-2 ring-primary-500;
 
         & .fi-fo-checkbox-option__indicator {
-          @apply fill-primary;
+          @apply fill-primary-500;
         }
 
         & .fi-fo-checkbox-option__icon {
-          @apply text-primary;
+          @apply text-primary-500;
         }
       }
     }

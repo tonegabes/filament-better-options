@@ -9,7 +9,10 @@
     $isDisabled = $isDisabled();
     $isHtmlAllowed = $isHtmlAllowed();
     $isSearchable = $isSearchable();
-    $jsComponentSrc = FilamentAsset::getAlpineComponentSrc('checkbox', 'tonegabes/better-options');
+    $jsComponentSrc = FilamentAsset::getAlpineComponentSrc(
+        'better-checkbox',
+        'tonegabes/better-options'
+    );
     $livewireKey = $getLivewireKey();
     $options = $getOptions();
     $statePath = $getStatePath();

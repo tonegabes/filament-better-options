@@ -13,7 +13,7 @@
     @apply flex gap-4 p-4 border border-gray-200 dark:border-white/20 rounded-lg cursor-pointer shadow-xs transition-all duration-200 ease-in-out;
 
     &:hover {
-      @apply ring-1 ring-primary;
+      @apply ring-1 ring-primary-500;
     }
 
     &:hover:not(.is-selected) {
@@ -81,14 +81,14 @@
     }
 
     &.is-selected {
-      @apply bg-primary/10 ring-2 ring-primary transform scale-[1.01];
+      @apply bg-primary-500/10 ring-2 ring-primary-500 transform scale-[1.01];
 
       & .fi-fo-radio-card__icon {
-        @apply fill-primary transition-colors duration-200;
+        @apply fill-primary-500 transition-colors duration-200;
       }
 
       & .fi-fo-radio-card__indicator {
-        @apply opacity-100 fill-primary;
+        @apply opacity-100 fill-primary-500;
       }
 
       & .is-indicator-partially-hidden {
@@ -97,7 +97,7 @@
     }
 
     &:has(input:focus-visible) {
-      @apply ring-2 ring-primary ring-offset-2;
+      @apply ring-2 ring-primary-500 ring-offset-2;
     }
   }
 }
