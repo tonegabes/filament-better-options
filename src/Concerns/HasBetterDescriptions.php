@@ -15,12 +15,12 @@ trait HasBetterDescriptions
 
     public function isDescriptionVisible(): bool
     {
-        return (bool) $this->evaluate($this->isDescriptionVisible);
+        return $this->isDescriptionVisible;
     }
 
     public function hiddenDescription(bool|Closure $condition = true): static
     {
-        $this->isDescriptionVisible = ! $condition;
+        $this->isDescriptionVisible = ! $this->evaluate($condition);
 
         return $this;
     }

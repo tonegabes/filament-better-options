@@ -122,7 +122,7 @@
                     @if ($isIndicatorBefore() && $isIndicatorVisible())
                         <x-better-options::option-indicator
                             ::is-selected="isSelected"
-                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
+                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
                             :idle-indicator="$getIdleIndicator()"
                             :selected-indicator="$getSelectedIndicator()"
                             class="fi-fo-checkbox-option__indicator"
@@ -164,7 +164,7 @@
                     @if ($isIndicatorAfter() && $isIndicatorVisible())
                         <x-better-options::option-indicator
                             ::is-selected="isSelected"
-                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
+                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
                             :idle-indicator="$getIdleIndicator()"
                             :selected-indicator="$getSelectedIndicator()"
                             class="fi-fo-checkbox-option__indicator"

@@ -14,7 +14,7 @@ trait HasOptionIcon
 {
     use HasIcons;
 
-    protected bool|Closure $isIconVisible = true;
+    protected bool $isIconVisible = true;
 
     protected ?IconPosition $iconPosition = null;
 
@@ -25,12 +25,12 @@ trait HasOptionIcon
 
     public function isIconVisible(): bool
     {
-        return (bool) $this->evaluate($this->isIconVisible);
+        return $this->isIconVisible;
     }
 
     public function hiddenIcon(bool|Closure $condition = true): static
     {
-        $this->isIconVisible = ! $condition;
+        $this->isIconVisible = ! $this->evaluate($condition);
 
         return $this;
     }

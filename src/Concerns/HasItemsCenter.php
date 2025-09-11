@@ -17,7 +17,7 @@ trait HasItemsCenter
 
     public function itemsCenter(bool|Closure $condition = true): static
     {
-        $this->isItemsCenter = (bool) $condition;
+        $this->isItemsCenter = (bool) $this->evaluate($condition);
 
         return $this;
     }

@@ -13,9 +13,9 @@ use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 trait HasIndicator
 {
-    protected bool|Closure $isIndicatorPartiallyHidden = false;
+    protected bool $isIndicatorPartiallyHidden = false;
 
-    protected bool|Closure $isIndicatorVisible = true;
+    protected bool $isIndicatorVisible = true;
 
     protected ?IconPosition $indicatorPosition = null;
 
@@ -25,24 +25,24 @@ trait HasIndicator
 
     public function isIndicatorPartiallyHidden(): bool
     {
-        return (bool) $this->evaluate($this->isIndicatorPartiallyHidden);
+        return $this->isIndicatorPartiallyHidden;
     }
 
     public function partiallyHiddenIndicator(bool|Closure $condition = true): static
     {
-        $this->isIndicatorPartiallyHidden = $condition;
+        $this->isIndicatorPartiallyHidden = (bool) $this->evaluate($condition);
 
         return $this;
     }
 
     public function isIndicatorVisible(): bool
     {
-        return (bool) $this->evaluate($this->isIndicatorVisible);
+        return $this->isIndicatorVisible;
     }
 
     public function hiddenIndicator(bool|Closure $condition = true): static
     {
-        $this->isIndicatorVisible = ! $condition;
+        $this->isIndicatorVisible = ! $this->evaluate($condition);
 
         return $this;
     }

@@ -17,18 +17,18 @@ trait HasExtraTexts
      */
     protected array|Arrayable|string|Closure|null $extraTexts = null;
 
-    protected bool|Closure $isExtraTextVisible = true;
+    protected bool $isExtraTextVisible = true;
 
     public function hiddenExtraText(bool|Closure $condition = true): static
     {
-        $this->isExtraTextVisible = ! $condition;
+        $this->isExtraTextVisible = ! $this->evaluate($condition);
 
         return $this;
     }
 
     public function isExtraTextVisible(): bool
     {
-        return (bool) $this->evaluate($this->isExtraTextVisible);
+        return $this->isExtraTextVisible;
     }
 
     /**
