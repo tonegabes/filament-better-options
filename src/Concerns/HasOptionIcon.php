@@ -18,10 +18,7 @@ trait HasOptionIcon
 
     protected ?IconPosition $iconPosition = null;
 
-    public function defaultIconPosition(): IconPosition
-    {
-        return IconPosition::After;
-    }
+    abstract public function defaultIconPosition(): IconPosition;
 
     public function isIconVisible(): bool
     {

@@ -19,8 +19,7 @@ class BetterOptionsServiceProvider extends PackageServiceProvider
         $package
             ->name(static::$name)
             ->hasViews(static::$name)
-            ->hasAssets()
-            ->hasConfigFile(static::$name);
+            ->hasAssets();
     }
 
     public function packageBooted(): void

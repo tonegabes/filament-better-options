@@ -23,6 +23,8 @@ trait HasIndicator
 
     protected string|BackedEnum|Htmlable|null $selectedIndicator = null;
 
+    abstract public function defaultIndicatorPosition(): IconPosition;
+
     public function isIndicatorPartiallyHidden(): bool
     {
         return $this->isIndicatorPartiallyHidden;
@@ -45,11 +47,6 @@ trait HasIndicator
         $this->isIndicatorVisible = ! $this->evaluate($condition);
 
         return $this;
-    }
-
-    public function defaultIndicatorPosition(): IconPosition
-    {
-        return IconPosition::Before;
     }
 
     public function indicatorPosition(IconPosition $position): static
