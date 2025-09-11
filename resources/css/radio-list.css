@@ -40,7 +40,7 @@
       @apply font-medium text-black dark:text-white;
     }
 
-    & .fi-fo-radio__indicator {
+    & .fi-fo-radio-item__indicator {
       @apply size-5 fill-gray-400 shrink-0 transition-opacity duration-400 ease-in-out;
     }
 
@@ -55,7 +55,7 @@
     &.fi-invalid {
       @apply ring-1 ring-red-300;
 
-      & .fi-fo-radio__indicator {
+      & .fi-fo-radio-item__indicator {
         @apply fill-red-500;
       }
     }
@@ -67,7 +67,7 @@
         @apply fill-primary-500;
       }
 
-      & .fi-fo-radio__indicator {
+      & .fi-fo-radio-item__indicator {
         @apply opacity-100 fill-primary-500;
       }
 

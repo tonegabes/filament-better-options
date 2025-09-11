@@ -116,7 +116,7 @@
                     />
 
                     @if ($isIndicatorBefore() && $isIndicatorVisible())
-                        <x-option-indicator
+                        <x-better-options::option-indicator
                             ::is-selected="isSelected"
                             :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
                             :idle-indicator="$getIdleIndicator()"
@@ -158,7 +158,7 @@
                     @endif
 
                     @if ($isIndicatorAfter() && $isIndicatorVisible())
-                        <x-option-indicator
+                        <x-better-options::option-indicator
                             ::is-selected="isSelected"
                             :is-indicator-partially-hidden="$isIndicatorPartiallyHidden"
                             :idle-indicator="$getIdleIndicator()"
