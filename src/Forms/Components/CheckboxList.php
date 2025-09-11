@@ -8,9 +8,10 @@ use BackedEnum;
 use Filament\Forms\Components\CheckboxList as BaseCheckboxList;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use ToneGabes\BetterOptions\Support\Concerns\HasExtraTexts;
-use ToneGabes\BetterOptions\Support\Concerns\HasIndicator;
-use ToneGabes\BetterOptions\Support\Concerns\HasOptionIcon;
+use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
+use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
+use ToneGabes\BetterOptions\Concerns\HasIndicator;
+use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
 use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 class CheckboxList extends BaseCheckboxList
@@ -18,6 +19,7 @@ class CheckboxList extends BaseCheckboxList
     use HasExtraTexts;
     use HasIndicator;
     use HasOptionIcon;
+    use HasBetterDescriptions;
 
     protected string $view = 'better-options::components.checkbox-list';
 

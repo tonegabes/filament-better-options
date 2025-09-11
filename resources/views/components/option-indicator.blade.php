@@ -11,7 +11,7 @@
         :name="$selectedIndicator"
         @class([
             $class,
-            'is-indicator-partially-hidden' => $isIndicatorPartiallyHidden(),
+            'is-indicator-partially-hidden' => $isIndicatorPartiallyHidden,
         ])
     />
 </template>
@@ -20,7 +20,7 @@
         :name="$idleIndicator"
         @class([
             $class,
-            'is-indicator-partially-hidden' => $isIndicatorPartiallyHidden(),
+            'is-indicator-partially-hidden' => $isIndicatorPartiallyHidden,
         ])
     />
 </template>

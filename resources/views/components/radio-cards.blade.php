@@ -2,7 +2,6 @@
     use Filament\Support\Enums\GridDirection;
 
     $extraInputAttributeBag = $getExtraInputAttributeBag();
-    $extraAttributeBag = $getExtraAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
     $gridDirection = $getGridDirection() ?? GridDirection::Row;
     $id = $getId();
@@ -19,7 +18,7 @@
 >
     <div
         {{
-            $extraAttributeBag
+            $getExtraAttributeBag()
                 ->grid($getColumns(), $gridDirection)
                 ->class(['fi-fo-radio-cards'])
         }}
@@ -42,7 +41,7 @@
                 @class([
                     'fi-fo-radio-card group/radio-card',
                     'fi-invalid' => $errors->has($statePath),
-                    'is-centered' => $extraAttributeBag->get('isCentered'),
+                    'is-centered' => $isItemsCenter(),
                 ])
                 x-data="{ isSelected: false }"
                 x-init="$watch(
@@ -72,7 +71,7 @@
                     <div class="fi-fo-radio-card__header">
                         <p class="fi-fo-radio-card__label">{{ $label }}</p>
 
-                        @if ($hasDescription($value) && ! $isDescriptionHidden())
+                        @if ($hasDescription($value) && $isDescriptionVisible())
                             <p class="fi-fo-radio-card__description">
                                 {{ $getDescription($value) }}
                             </p>

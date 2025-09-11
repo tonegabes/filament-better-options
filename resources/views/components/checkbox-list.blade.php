@@ -139,7 +139,7 @@
                                 @endif
                             </span>
 
-                            @if ($hasDescription($value))
+                            @if ($hasDescription($value) && $isDescriptionVisible())
                                 <p class="fi-fo-checkbox-option__description">
                                     {{ $getDescription($value) }}
                                 </p>

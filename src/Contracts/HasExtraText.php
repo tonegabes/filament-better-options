@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ToneGabes\BetterOptions\Support\Contracts;
+namespace ToneGabes\BetterOptions\Contracts;
 
 use Illuminate\Contracts\Support\Htmlable;
 

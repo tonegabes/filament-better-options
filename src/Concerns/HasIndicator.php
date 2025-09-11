@@ -98,7 +98,7 @@ trait HasIndicator
 
     public function defaultSelectedIndicator(): string|BackedEnum|Htmlable
     {
-        return Phosphor::RecordFill->getLabel();
+        return Phosphor::CheckCircleFill->getLabel();
     }
 
     public function getIdleIndicator(): string|BackedEnum|Htmlable

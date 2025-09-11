@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace ToneGabes\BetterOptions\Forms\Components;
 
-use Closure;
 use Filament\Forms\Components\Concerns;
 use Filament\Forms\Components\Contracts\CanDisableOptions;
 use Filament\Forms\Components\Field;
 use Filament\Support\Enums\IconPosition;
-use ToneGabes\BetterOptions\Support\Concerns\HasExtraTexts;
-use ToneGabes\BetterOptions\Support\Concerns\HasIndicator;
-use ToneGabes\BetterOptions\Support\Concerns\HasOptionIcon;
+use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
+use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
+use ToneGabes\BetterOptions\Concerns\HasIndicator;
+use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
 
 class RadioList extends Field implements CanDisableOptions
 {
@@ -22,6 +22,7 @@ class RadioList extends Field implements CanDisableOptions
     use Concerns\HasExtraInputAttributes;
     use Concerns\HasGridDirection;
     use Concerns\HasOptions;
+    use HasBetterDescriptions;
     use HasExtraTexts;
     use HasIndicator;
     use HasOptionIcon;
@@ -31,8 +32,6 @@ class RadioList extends Field implements CanDisableOptions
      */
     protected string $view = 'better-options::components.radio-list';
 
-    protected bool|Closure $isDescriptionHidden = false;
-
     public function defaultIconPosition(): IconPosition
     {
         return IconPosition::After;
@@ -41,18 +40,6 @@ class RadioList extends Field implements CanDisableOptions
     public function defaultIndicatorPosition(): IconPosition
     {
         return IconPosition::Before;
-    }
-
-    public function isDescriptionHidden(): bool
-    {
-        return (bool) $this->evaluate($this->isDescriptionHidden);
-    }
-
-    public function hiddenDescription(bool|Closure $condition = true): static
-    {
-        $this->isDescriptionHidden = $condition;
-
-        return $this;
     }
 
     /**

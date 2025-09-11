@@ -1,9 +1,6 @@
 @php
-    use Filament\Support\Enums\GridDirection;
-
     $extraInputAttributeBag = $getExtraInputAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
-    $gridDirection = $getGridDirection() ?? GridDirection::Row;
     $id = $getId();
     $isDisabled = $isDisabled();
     $livewireKey = $getLivewireKey();
@@ -17,11 +14,7 @@
     class="fi-fo-radio-list-wrapper"
 >
     <div
-        {{
-            $getExtraAttributeBag()
-                ->grid($getColumns(), $gridDirection)
-                ->class(['fi-fo-radio-list'])
-        }}
+        {{ $getExtraAttributeBag()->class(['fi-fo-radio-list'])}}
     >
         @foreach ($getOptions() as $value => $label)
             @php
@@ -71,7 +64,7 @@
                     <div class="fi-fo-radio-item__header">
                         <p class="fi-fo-radio-item__label">{{ $label }}</p>
 
-                        @if ($hasDescription($value) && ! $isDescriptionHidden())
+                        @if ($hasDescription($value) && $isDescriptionVisible())
                             <p class="fi-fo-radio-item__description">
                                 {{ $getDescription($value) }}
                             </p>
