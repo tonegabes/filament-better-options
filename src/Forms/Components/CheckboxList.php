@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ToneGabes\BetterOptions\Forms\Components;
 
 use Filament\Forms\Components\CheckboxList as BaseCheckboxList;
-use Filament\Support\Enums\IconPosition;
 use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
@@ -20,18 +19,11 @@ class CheckboxList extends BaseCheckboxList
 
     protected string $view = 'better-options::components.checkbox-list';
 
-    public function defaultIconPosition(): IconPosition
+    protected function setUp(): void
     {
-        return IconPosition::After;
-    }
+        parent::setUp();
 
-    public function setComponentType(): void
-    {
-        $this->componentType = 'checkbox';
-    }
-
-    public function setComponentStyle(): void
-    {
-        $this->componentStyle = 'list';
+        $this->setComponentType('checkbox');
+        $this->setComponentStyle('list');
     }
 }

@@ -9,122 +9,26 @@ use Closure;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use ToneGabes\BetterOptions\Services\IconManager;
+use ToneGabes\BetterOptions\Services\IconManagerService;
+use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 trait HasIndicator
 {
-    protected bool $isIndicatorPartiallyHidden = false;
-
-    protected bool $isIndicatorVisible = true;
-
-    protected ?IconPosition $indicatorPosition = null;
+    protected ?string $componentType = null;
 
     protected string|BackedEnum|Htmlable|null $idleIndicator = null;
 
     protected string|BackedEnum|Htmlable|null $selectedIndicator = null;
 
-    protected ?string $componentType = null;
+    protected ?IconPosition $indicatorPosition = null;
 
-    protected ?string $componentStyle = null;
+    protected bool $isIndicatorVisible = true;
 
-    abstract public function setComponentType(): void;
+    protected bool $isIndicatorPartiallyHidden = false;
 
-    abstract public function setComponentStyle(): void;
-
-    public function isIndicatorPartiallyHidden(): bool
+    public function setComponentType(string $componentType): void
     {
-        return $this->isIndicatorPartiallyHidden;
-    }
-
-    public function partiallyHiddenIndicator(bool|Closure $condition = true): static
-    {
-        $this->isIndicatorPartiallyHidden = (bool) $this->evaluate($condition);
-
-        return $this;
-    }
-
-    public function isIndicatorVisible(): bool
-    {
-        return $this->isIndicatorVisible;
-    }
-
-    public function hiddenIndicator(bool|Closure $condition = true): static
-    {
-        $this->isIndicatorVisible = ! $this->evaluate($condition);
-
-        return $this;
-    }
-
-    public function indicatorPosition(IconPosition $position): static
-    {
-        $this->indicatorPosition = $position;
-
-        return $this;
-    }
-
-    public function isIndicatorBefore(): bool
-    {
-        if ($this->indicatorPosition === null) {
-            return $this->getDefaultIndicatorPosition() === IconPosition::Before;
-        }
-
-        return $this->indicatorPosition === IconPosition::Before;
-    }
-
-    public function isIndicatorAfter(): bool
-    {
-        if ($this->indicatorPosition === null) {
-            return $this->getDefaultIndicatorPosition() === IconPosition::After;
-        }
-
-        return $this->indicatorPosition === IconPosition::After;
-    }
-
-    public function indicatorBefore(): static
-    {
-        $this->indicatorPosition = IconPosition::Before;
-
-        return $this;
-    }
-
-    public function indicatorAfter(): static
-    {
-        $this->indicatorPosition = IconPosition::After;
-
-        return $this;
-    }
-
-    public function getDefaultIndicatorPosition(): IconPosition
-    {
-        return match($this->componentStyle) {
-            'list'  => IconPosition::Before,
-            'cards' => IconPosition::After,
-            default => IconPosition::Before,
-        };
-    }
-
-    public function getDefaultIdleIndicator(): string|BackedEnum|Htmlable
-    {
-        $iconManager = app(IconManager::class);
-
-        return $iconManager->getDefaultIcon($this->componentType . '_idle');
-    }
-
-    public function getDefaultSelectedIndicator(): string|BackedEnum|Htmlable
-    {
-        $iconManager = app(IconManager::class);
-
-        return $iconManager->getDefaultIcon($this->componentType . '_selected');
-    }
-
-    public function getIdleIndicator(): string|BackedEnum|Htmlable
-    {
-        return $this->idleIndicator ?? $this->getDefaultIdleIndicator();
-    }
-
-    public function getSelectedIndicator(): string|BackedEnum|Htmlable
-    {
-        return $this->selectedIndicator ?? $this->getDefaultSelectedIndicator();
+        $this->componentType = $componentType;
     }
 
     public function idleIndicator(string|BackedEnum|Htmlable|null $idleIndicator): static
@@ -149,13 +53,107 @@ trait HasIndicator
         return $this;
     }
 
+    public function indicatorPosition(IconPosition $position): static
+    {
+        $this->indicatorPosition = $position;
+
+        return $this;
+    }
+
+    public function indicatorBefore(): static
+    {
+        $this->indicatorPosition = IconPosition::Before;
+
+        return $this;
+    }
+
+    public function indicatorAfter(): static
+    {
+        $this->indicatorPosition = IconPosition::After;
+
+        return $this;
+    }
+
+    public function isIndicatorBefore(): bool
+    {
+        if ($this->indicatorPosition === null) {
+            return $this->getDefaultIndicatorPosition() === IconPosition::Before;
+        }
+
+        return $this->indicatorPosition === IconPosition::Before;
+    }
+
+    public function isIndicatorAfter(): bool
+    {
+        if ($this->indicatorPosition === null) {
+            return $this->getDefaultIndicatorPosition() === IconPosition::After;
+        }
+
+        return $this->indicatorPosition === IconPosition::After;
+    }
+
+    public function hiddenIndicator(bool|Closure $condition = true): static
+    {
+        $this->isIndicatorVisible = ! $this->evaluate($condition);
+
+        return $this;
+    }
+
+    public function partiallyHiddenIndicator(bool|Closure $condition = true): static
+    {
+        $this->isIndicatorPartiallyHidden = (bool) $this->evaluate($condition);
+
+        return $this;
+    }
+
+    public function isIndicatorVisible(): bool
+    {
+        return $this->isIndicatorVisible;
+    }
+
+    public function isIndicatorPartiallyHidden(): bool
+    {
+        return $this->isIndicatorPartiallyHidden;
+    }
+
+    public function getIdleIndicator(): string|BackedEnum|Htmlable
+    {
+        return $this->idleIndicator ?? $this->getDefaultIdleIndicator();
+    }
+
+    public function getSelectedIndicator(): string|BackedEnum|Htmlable
+    {
+        return $this->selectedIndicator ?? $this->getDefaultSelectedIndicator();
+    }
+
+    public function getDefaultIndicatorPosition(): IconPosition
+    {
+        return match($this->componentStyle) {
+            'list'  => IconPosition::Before,
+            'cards' => IconPosition::After,
+            default => IconPosition::Before,
+        };
+    }
+
+    public function getDefaultIdleIndicator(): string|BackedEnum|Htmlable
+    {
+        return IconManagerService::resolveIndicatorIcon($this->componentType, 'idle');
+    }
+
+    public function getDefaultSelectedIndicator(): string|BackedEnum|Htmlable
+    {
+        return IconManagerService::resolveIndicatorIcon($this->componentType, 'selected');
+    }
+
     protected function getFallbackIdleIndicator(): string
     {
-        return $this->componentType === 'checkbox' ? '☐' : '○';
+        return Phosphor::Acorn->getLabel();
+        // return $this->componentType === 'checkbox' ? '☐' : '○';
     }
 
     protected function getFallbackSelectedIndicator(): string
     {
-        return $this->componentType === 'checkbox' ? '☑' : '●';
+        return Phosphor::AcornFill->getLabel();
+        // return $this->componentType === 'checkbox' ? '☑' : '●';
     }
 }

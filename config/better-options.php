@@ -5,18 +5,6 @@ declare(strict_types=1);
 return [
     /*
     |--------------------------------------------------------------------------
-    | Configuração de Ícones
-    |--------------------------------------------------------------------------
-    |
-    | Configure o provedor de ícones para os componentes. Por padrão usa
-    | Phosphor Icons, mas pode ser sobrescrito pelo usuário.
-    |
-    */
-
-    'icons_provider' => ToneGabes\BetterOptions\Providers\PhosphorIconsProvider::class,
-
-    /*
-    |--------------------------------------------------------------------------
     | Posições Padrão
     |--------------------------------------------------------------------------
     |

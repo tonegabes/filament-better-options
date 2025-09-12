@@ -6,7 +6,6 @@ namespace ToneGabes\BetterOptions\Forms\Components;
 
 use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Concerns\HasColumns;
-use Filament\Support\Enums\IconPosition;
 use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
@@ -24,21 +23,12 @@ class CheckboxCards extends CheckboxList
 
     protected string $view = 'better-options::components.checkbox-cards';
 
-    public function defaultIconPosition(): IconPosition
+    protected function setUp(): void
     {
-        $configPosition = config('better-options.default_positions.checkbox_cards.icon', 'before');
+        parent::setUp();
 
-        return $configPosition === 'after' ? IconPosition::After : IconPosition::Before;
-    }
-
-    public function setComponentType(): void
-    {
-        $this->componentType = 'checkbox';
-    }
-
-    public function setComponentStyle(): void
-    {
-        $this->componentStyle = 'cards';
+        $this->setComponentType('checkbox');
+        $this->setComponentStyle('cards');
     }
 
     /**

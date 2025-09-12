@@ -14,11 +14,16 @@ trait HasOptionIcon
 {
     use HasIcons;
 
+    protected ?string $componentStyle = null;
+
     protected bool $isIconVisible = true;
 
     protected ?IconPosition $iconPosition = null;
 
-    abstract public function defaultIconPosition(): IconPosition;
+    public function setComponentStyle(string $componentStyle): void
+    {
+        $this->componentStyle = $componentStyle;
+    }
 
     public function isIconVisible(): bool
     {
@@ -62,7 +67,6 @@ trait HasOptionIcon
 
     public function iconBefore(): static
     {
-
         $this->iconPosition = IconPosition::Before;
 
         return $this;
@@ -78,7 +82,7 @@ trait HasOptionIcon
     public function hasIconBefore(): bool
     {
         if ($this->iconPosition === null) {
-            return $this->defaultIconPosition() === IconPosition::Before;
+            return $this->getDefaultIconPosition() === IconPosition::Before;
         }
 
         return $this->iconPosition === IconPosition::Before;
@@ -87,9 +91,18 @@ trait HasOptionIcon
     public function hasIconAfter(): bool
     {
         if ($this->iconPosition === null) {
-            return $this->defaultIconPosition() === IconPosition::After;
+            return $this->getDefaultIconPosition() === IconPosition::After;
         }
 
         return $this->iconPosition === IconPosition::After;
+    }
+
+    public function getDefaultIconPosition(): IconPosition
+    {
+        return match ($this->componentStyle) {
+            'cards' => IconPosition::Before,
+            'list'  => IconPosition::After,
+            default => IconPosition::Before,
+        };
     }
 }

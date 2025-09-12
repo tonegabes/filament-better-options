@@ -9,7 +9,6 @@ use Filament\Forms\Components\Contracts\CanDisableOptions;
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Concerns\HasColumns;
 use Filament\Support\Concerns\HasExtraAttributes;
-use Filament\Support\Enums\IconPosition;
 use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
@@ -35,34 +34,12 @@ class RadioCards extends Field implements CanDisableOptions
 
     protected string $view = 'better-options::components.radio-cards';
 
-    /**
-     * Posição padrão do ícone baseada na configuração
-     */
-    public function defaultIconPosition(): IconPosition
+    protected function setUp(): void
     {
-        $configPosition = config('better-options.default_positions.radio_cards.icon', 'before');
+        parent::setUp();
 
-        return $configPosition === 'after' ? IconPosition::After : IconPosition::Before;
-    }
-
-    /**
-     * Posição padrão do indicador baseada na configuração
-     */
-    public function defaultIndicatorPosition(): IconPosition
-    {
-        $configPosition = config('better-options.default_positions.radio_cards.indicator', 'after');
-
-        return $configPosition === 'after' ? IconPosition::After : IconPosition::Before;
-    }
-
-    public function setComponentType(): void
-    {
-        $this->componentType = 'radio';
-    }
-
-    public function setComponentStyle(): void
-    {
-        $this->componentStyle = 'cards';
+        $this->setComponentType('radio');
+        $this->setComponentStyle('cards');
     }
 
     /**
