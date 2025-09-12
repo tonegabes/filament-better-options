@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace ToneGabes\BetterOptions\Forms\Components;
 
-use BackedEnum;
 use Filament\Forms\Components\CheckboxList as BaseCheckboxList;
 use Filament\Support\Enums\IconPosition;
-use Illuminate\Contracts\Support\Htmlable;
 use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
 use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
-use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 class CheckboxList extends BaseCheckboxList
 {
@@ -23,23 +20,18 @@ class CheckboxList extends BaseCheckboxList
 
     protected string $view = 'better-options::components.checkbox-list';
 
-    public function defaultIndicatorPosition(): IconPosition
-    {
-        return IconPosition::Before;
-    }
-
     public function defaultIconPosition(): IconPosition
     {
         return IconPosition::After;
     }
 
-    public function defaultIdleIndicator(): string|BackedEnum|Htmlable
+    public function setComponentType(): void
     {
-        return Phosphor::SquareThin->getLabel();
+        $this->componentType = 'checkbox';
     }
 
-    public function defaultSelectedIndicator(): string|BackedEnum|Htmlable
+    public function setComponentStyle(): void
     {
-        return Phosphor::CheckSquareFill->getLabel();
+        $this->componentStyle = 'list';
     }
 }

@@ -34,9 +34,14 @@ class RadioList extends Field implements CanDisableOptions
         return IconPosition::After;
     }
 
-    public function defaultIndicatorPosition(): IconPosition
+    public function setComponentType(): void
     {
-        return IconPosition::Before;
+        $this->componentType = 'radio';
+    }
+
+    public function setComponentStyle(): void
+    {
+        $this->componentStyle = 'list';
     }
 
     /**

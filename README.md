@@ -12,9 +12,10 @@ Enhanced checkbox and radio button components for Filament Forms with modern UI,
 ✨ **Enhanced UI Components**
 
 - Modern card-based and list layouts
-- Customizable visual indicators with Phosphor icons
+- Extensible icon system with multiple providers (Phosphor, Heroicons, custom)
 - Flexible icon positioning (before/after)
 - Support for descriptions and extra text
+- Pre-defined themes (minimal, modern, classic)
 
 🔍 **Advanced Functionality**
 
@@ -22,20 +23,34 @@ Enhanced checkbox and radio button components for Filament Forms with modern UI,
 - Bulk select/deselect operations for checkboxes
 - Configurable positioning and visibility
 - Performance-optimized JavaScript
+- Icon validation and debug tools
 
-🎨 **Customization**
+🎨 **Extensible Architecture**
 
+- Multiple icon provider support (Phosphor, Heroicons, Font Awesome, etc.)
+- Custom icon provider creation
 - Tailwind CSS styling with dark mode support
-- Configurable default positions via config file
-- Extensible architecture with traits and concerns
+- Configurable default positions and icons via config file
+- Trait-based architecture for maximum flexibility
 - Full accessibility support
 
-⚡ **Performance**
+⚡ **Performance & Caching**
 
+- Intelligent icon caching system with memory and persistent cache
+- Cache optimization and health monitoring
+- Preloading of common icons
 - Optimized CSS build process with PurgeCSS
 - Efficient DOM operations and caching
 - Lazy-loaded Alpine.js components
 - Minimal JavaScript footprint
+
+🛠️ **Developer Experience**
+
+- Comprehensive debugging tools and validation
+- Artisan commands for cache management
+- Detailed statistics and health monitoring
+- Extensive documentation and examples
+- Hot-swappable icon providers
 
 ## Requirements
 
@@ -65,12 +80,31 @@ php artisan vendor:publish --tag="better-options-assets"
 
 ## Configuration
 
-The published configuration file (`config/better-options.php`) allows you to customize default positions:
+The published configuration file (`config/better-options.php`) provides extensive customization options:
 
 ```php
 <?php
 
 return [
+    // Icon system configuration
+    'icons' => [
+        'default_provider' => 'phosphor', // or 'heroicons'
+
+        'providers' => [
+            'phosphor' => \ToneGabes\BetterOptions\IconProviders\PhosphorIconProvider::class,
+            'heroicons' => \ToneGabes\BetterOptions\IconProviders\HeroIconProvider::class,
+            // Add your custom providers here
+        ],
+
+        'defaults' => [
+            'checkbox_idle' => null, // Override default icons
+            'checkbox_selected' => null,
+            'radio_idle' => null,
+            'radio_selected' => null,
+        ],
+    ],
+
+    // Default positions
     'default_positions' => [
         'checkbox_list' => [
             'icon'      => 'after',
@@ -88,6 +122,13 @@ return [
             'icon'      => 'before',
             'indicator' => 'after',
         ],
+    ],
+
+    // Performance settings
+    'performance' => [
+        'cache_icons' => true,
+        'cache_ttl' => 60, // minutes
+        'lazy_load_js' => true,
     ],
 ];
 ```
@@ -139,6 +180,60 @@ RadioList::make('subscription_plan')
         'pro' => 'Great for growing teams',
         'enterprise' => 'Full-featured solution',
     ]);
+```
+
+### Extensible Icon System
+
+The plugin now features a powerful, extensible icon system that supports multiple providers:
+
+```php
+// Using different icon providers
+CheckboxCards::make('features')
+    ->options([
+        'performance' => 'High Performance',
+        'security' => 'Enhanced Security',
+    ])
+    ->icons([
+        'performance' => 'lightning', // Auto-resolved by provider
+        'security' => 'heroicon-o-shield-check', // Explicit provider
+    ])
+    ->useIconProvider('phosphor') // Preferred provider
+    ->theme('modern'); // Pre-defined theme
+
+// Creating custom providers
+class FontAwesomeIconProvider implements IconProvider
+{
+    public function getName(): string
+    {
+        return 'fontawesome';
+    }
+
+    public function supports(string $iconName): bool
+    {
+        return str_starts_with($iconName, 'fa-');
+    }
+
+    // ... implement other methods
+}
+
+// Using the facade for direct icon resolution
+use ToneGabes\BetterOptions\Facades\BetterOptionsIcon;
+
+$icon = BetterOptionsIcon::resolveIcon('heart');
+$stats = BetterOptionsIcon::getStats();
+```
+
+### Cache Management
+
+Optimize performance with built-in caching:
+
+```bash
+# Cache management commands
+php artisan better-options:cache clear
+php artisan better-options:cache optimize
+php artisan better-options:cache preload
+php artisan better-options:cache stats
+php artisan better-options:cache health
 ```
 
 ### Advanced Features

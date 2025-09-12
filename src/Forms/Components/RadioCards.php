@@ -35,14 +35,79 @@ class RadioCards extends Field implements CanDisableOptions
 
     protected string $view = 'better-options::components.radio-cards';
 
+    /**
+     * Posição padrão do ícone baseada na configuração
+     */
     public function defaultIconPosition(): IconPosition
     {
-        return IconPosition::Before;
+        $configPosition = config('better-options.default_positions.radio_cards.icon', 'before');
+
+        return $configPosition === 'after' ? IconPosition::After : IconPosition::Before;
     }
 
+    /**
+     * Posição padrão do indicador baseada na configuração
+     */
     public function defaultIndicatorPosition(): IconPosition
     {
-        return IconPosition::After;
+        $configPosition = config('better-options.default_positions.radio_cards.indicator', 'after');
+
+        return $configPosition === 'after' ? IconPosition::After : IconPosition::Before;
+    }
+
+    public function setComponentType(): void
+    {
+        $this->componentType = 'radio';
+    }
+
+    public function setComponentStyle(): void
+    {
+        $this->componentStyle = 'cards';
+    }
+
+    /**
+     * Aplicar configuração de tema pré-definido
+     */
+    public function theme(string $theme): static
+    {
+        return match ($theme) {
+            'minimal' => $this->applyMinimalTheme(),
+            'modern'  => $this->applyModernTheme(),
+            'classic' => $this->applyClassicTheme(),
+            default   => $this,
+        };
+    }
+
+    /**
+     * Aplicar tema minimal
+     */
+    protected function applyMinimalTheme(): static
+    {
+        return $this
+            ->partiallyHiddenIndicator()
+            ->iconAfter()
+            ->indicatorBefore();
+    }
+
+    /**
+     * Aplicar tema modern
+     */
+    protected function applyModernTheme(): static
+    {
+        return $this
+            ->iconBefore()
+            ->indicatorAfter()
+            ->itemsCenter();
+    }
+
+    /**
+     * Aplicar tema classic
+     */
+    protected function applyClassicTheme(): static
+    {
+        return $this
+            ->iconAfter()
+            ->indicatorBefore();
     }
 
     /**

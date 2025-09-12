@@ -9,7 +9,7 @@ use Closure;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use ToneGabes\Filament\Icons\Enums\Phosphor;
+use ToneGabes\BetterOptions\Services\IconManager;
 
 trait HasIndicator
 {
@@ -23,7 +23,13 @@ trait HasIndicator
 
     protected string|BackedEnum|Htmlable|null $selectedIndicator = null;
 
-    abstract public function defaultIndicatorPosition(): IconPosition;
+    protected ?string $componentType = null;
+
+    protected ?string $componentStyle = null;
+
+    abstract public function setComponentType(): void;
+
+    abstract public function setComponentStyle(): void;
 
     public function isIndicatorPartiallyHidden(): bool
     {
@@ -59,7 +65,7 @@ trait HasIndicator
     public function isIndicatorBefore(): bool
     {
         if ($this->indicatorPosition === null) {
-            return $this->defaultIndicatorPosition() === IconPosition::Before;
+            return $this->getDefaultIndicatorPosition() === IconPosition::Before;
         }
 
         return $this->indicatorPosition === IconPosition::Before;
@@ -68,7 +74,7 @@ trait HasIndicator
     public function isIndicatorAfter(): bool
     {
         if ($this->indicatorPosition === null) {
-            return $this->defaultIndicatorPosition() === IconPosition::After;
+            return $this->getDefaultIndicatorPosition() === IconPosition::After;
         }
 
         return $this->indicatorPosition === IconPosition::After;
@@ -88,24 +94,37 @@ trait HasIndicator
         return $this;
     }
 
-    public function defaultIdleIndicator(): string|BackedEnum|Htmlable
+    public function getDefaultIndicatorPosition(): IconPosition
     {
-        return Phosphor::CircleThin->getLabel();
+        return match($this->componentStyle) {
+            'list'  => IconPosition::Before,
+            'cards' => IconPosition::After,
+            default => IconPosition::Before,
+        };
     }
 
-    public function defaultSelectedIndicator(): string|BackedEnum|Htmlable
+    public function getDefaultIdleIndicator(): string|BackedEnum|Htmlable
     {
-        return Phosphor::CheckCircleFill->getLabel();
+        $iconManager = app(IconManager::class);
+
+        return $iconManager->getDefaultIcon($this->componentType . '_idle');
+    }
+
+    public function getDefaultSelectedIndicator(): string|BackedEnum|Htmlable
+    {
+        $iconManager = app(IconManager::class);
+
+        return $iconManager->getDefaultIcon($this->componentType . '_selected');
     }
 
     public function getIdleIndicator(): string|BackedEnum|Htmlable
     {
-        return $this->idleIndicator ?? $this->defaultIdleIndicator();
+        return $this->idleIndicator ?? $this->getDefaultIdleIndicator();
     }
 
     public function getSelectedIndicator(): string|BackedEnum|Htmlable
     {
-        return $this->selectedIndicator ?? $this->defaultSelectedIndicator();
+        return $this->selectedIndicator ?? $this->getDefaultSelectedIndicator();
     }
 
     public function idleIndicator(string|BackedEnum|Htmlable|null $idleIndicator): static
@@ -128,5 +147,15 @@ trait HasIndicator
         $this->selectedIndicator = $selectedIndicator;
 
         return $this;
+    }
+
+    protected function getFallbackIdleIndicator(): string
+    {
+        return $this->componentType === 'checkbox' ? '☐' : '○';
+    }
+
+    protected function getFallbackSelectedIndicator(): string
+    {
+        return $this->componentType === 'checkbox' ? '☑' : '●';
     }
 }
