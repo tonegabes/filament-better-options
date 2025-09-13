@@ -42,6 +42,10 @@ trait HasOptionIcon
      */
     public function hasIcon($value): bool
     {
+        if (! $this->isIconVisible) {
+            return false;
+        }
+
         return array_key_exists($value, $this->getIcons());
     }
 
@@ -79,7 +83,7 @@ trait HasOptionIcon
         return $this;
     }
 
-    public function hasIconBefore(): bool
+    public function isIconBefore(): bool
     {
         if ($this->iconPosition === null) {
             return $this->getDefaultIconPosition() === IconPosition::Before;
@@ -88,7 +92,7 @@ trait HasOptionIcon
         return $this->iconPosition === IconPosition::Before;
     }
 
-    public function hasIconAfter(): bool
+    public function isIconAfter(): bool
     {
         if ($this->iconPosition === null) {
             return $this->getDefaultIconPosition() === IconPosition::After;

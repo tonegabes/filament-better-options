@@ -59,8 +59,8 @@
                         />
                     @endif
 
-                    @if ($hasIconBefore() && $isIconVisible())
-                        @svg($getOptionIcon($value), ['class' => 'fi-fo-radio-item__icon'])
+                    @if ($hasIcon($value) && $isIconBefore())
+                        @svg($getIcon($value), ['class' => 'fi-fo-radio-item__icon'])
                     @endif
 
                 <div class="fi-fo-radio-item__content">
@@ -81,8 +81,8 @@
                     </p>
                 @endif
 
-                @if ($hasIconAfter() && $isIconVisible())
-                    @svg($getOptionIcon($value), ['class' => 'fi-fo-radio-item__icon'])
+                @if ($hasIcon($value) && $isIconAfter())
+                    @svg($getIcon($value), ['class' => 'fi-fo-radio-item__icon'])
                 @endif
 
                 @if ($isIndicatorAfter() && $isIndicatorVisible())

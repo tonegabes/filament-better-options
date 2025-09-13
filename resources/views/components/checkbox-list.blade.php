@@ -82,7 +82,7 @@
                     :aria-checked="isSelected"
                     :aria-selected="isSelected"
                     :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
-                    :for="$itemId"
+                    for="{{ $itemId }}"
                     tabindex="0"
                 >
                     <input
@@ -111,8 +111,8 @@
                         />
                     @endif
 
-                    @if ($hasIconBefore() && $isIconVisible())
-                        @svg($getOptionIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
+                    @if ($hasIcon($value) && $isIconBefore())
+                        @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
                     @endif
 
                     <x-better-options::checkbox-content
@@ -124,8 +124,8 @@
                         :show-extra-text="$hasExtraText($value) && $isExtraTextVisible()"
                     />
 
-                    @if ($hasIconAfter() && $isIconVisible())
-                        @svg($getOptionIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
+                    @if ($hasIcon($value) && $isIconAfter())
+                        @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
                     @endif
 
                     @if ($isIndicatorAfter() && $isIndicatorVisible())

@@ -87,6 +87,6 @@ trait HasExtraTexts
             }, []);
         }
 
-        return $extraTexts;
+        return is_array($extraTexts) ? $extraTexts : [];
     }
 }
