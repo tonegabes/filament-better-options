@@ -66,16 +66,21 @@
                         x-show="isFoundInSearch($el)"
                     @endif
 
-                    x-data="{ isSelected: false }"
-                    x-init="
-                        $watch(
-                            '$wire.{{ $statePath }}',
-                            value => {
-                                value = Array.isArray(value) ? value : [];
-                                isSelected = value.includes('{{ $value }}')
-                            }
-                        )
-                    "
+                    x-data="{
+                        isSelected: false,
+                        init() {
+                            this.updateSelectedState();
+
+                            this.$watch('$wire.{{ $statePath }}', () => {
+                                this.updateSelectedState();
+                            });
+                        },
+                        updateSelectedState() {
+                            const currentValue = $wire.get('{{ $statePath }}');
+                            const value = Array.isArray(currentValue) ? currentValue : [];
+                            this.isSelected = value.includes('{{ $value }}');
+                        }
+                    }"
                     @class([
                         'fi-fo-checkbox-option',
                         'is-centered' => $isItemsCenter(),

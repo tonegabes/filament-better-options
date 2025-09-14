@@ -43,11 +43,20 @@
                     'fi-invalid' => $errors->has($statePath),
                     'is-centered' => $isItemsCenter(),
                 ])
-                x-data="{ isSelected: false }"
-                x-init="$watch(
-                    '$wire.{{ $statePath }}',
-                    value => isSelected = (value ?? '') === '{{ $value }}'
-                )"
+                x-data="{
+                    isSelected: false,
+                    init() {
+                        this.updateSelectedState();
+
+                        this.$watch('$wire.{{ $statePath }}', () => {
+                            this.updateSelectedState();
+                        });
+                    },
+                    updateSelectedState() {
+                        const currentValue = $wire.get('{{ $statePath }}');
+                        this.isSelected = (currentValue ?? '') === '{{ $value }}';
+                    }
+                }"
                 :class="{ 'is-selected': isSelected }"
                 role="radio"
                 :aria-checked="isSelected"
