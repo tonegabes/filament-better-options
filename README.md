@@ -2,63 +2,47 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
 [![Total Downloads](https://img.shields.io/packagist/dt/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
-[![Tests](https://img.shields.io/github/actions/workflow/status/tonegabes/filament-better-options/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/tonegabes/filament-better-options/actions/workflows/run-tests.yml)
-[![PHPStan](https://img.shields.io/github/actions/workflow/status/tonegabes/filament-better-options/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/tonegabes/filament-better-options/actions/workflows/phpstan.yml)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/tonegabes/filament-better-options/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/tonegabes/filament-better-options/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/tonegabes/filament-better-options/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/tonegabes/filament-better-options/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 
-Enhanced checkbox and radio button components for Filament Forms with modern UI, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `RadioList`, and `RadioCards` with icons, visual indicators, descriptions, extra text, search functionality, and bulk operations.
+Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `RadioList`, and `RadioCards` with icons, visual indicators, descriptions, extra texts, search functionality, and bulk operations.
 
-## Features
+## ✨ Features
 
-✨ **Enhanced UI Components**
-
-- Modern card-based and list layouts
-- Extensible icon system with multiple providers (Phosphor, Heroicons, custom)
+### 🎨 Enhanced UI Components
+- Modern card and list layouts
+- Extensible icon system with multiple providers (Phosphor, Heroicons)
 - Flexible icon positioning (before/after)
-- Support for descriptions and extra text
+- Support for descriptions and extra texts
 - Pre-defined themes (minimal, modern, classic)
 
-🔍 **Advanced Functionality**
-
+### 🔍 Advanced Features
 - Real-time search with debounced input
 - Bulk select/deselect operations for checkboxes
 - Configurable positioning and visibility
 - Performance-optimized JavaScript
 - Icon validation and debug tools
 
-🎨 **Extensible Architecture**
-
-- Multiple icon provider support (Phosphor, Heroicons, Font Awesome, etc.)
-- Custom icon provider creation
+### 🏗️ Extensible Architecture
+- Multiple icon provider support
+- Trait system for maximum flexibility
 - Tailwind CSS styling with dark mode support
 - Configurable default positions and icons via config file
-- Trait-based architecture for maximum flexibility
 - Full accessibility support
 
-⚡ **Performance & Caching**
-
-- Intelligent icon caching system with memory and persistent cache
-- Cache optimization and health monitoring
-- Preloading of common icons
-- Optimized CSS build process with PurgeCSS
+### ⚡ Performance & Caching
+- Intelligent icon caching system
 - Efficient DOM operations and caching
-- Lazy-loaded Alpine.js components
+- Alpine.js components loaded on demand
 - Minimal JavaScript footprint
 
-🛠️ **Developer Experience**
-
-- Comprehensive debugging tools and validation
-- Artisan commands for cache management
-- Detailed statistics and health monitoring
-- Extensive documentation and examples
-- Hot-swappable icon providers
-
-## Requirements
+## 📋 Requirements
 
 - PHP 8.3+
 - Laravel 11.0+
 - Filament 4.0+
 
-## Installation
+## 🚀 Installation
 
 Install the package via Composer:
 
@@ -78,7 +62,7 @@ Optionally, publish the assets for customization:
 php artisan vendor:publish --tag="better-options-assets"
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 The published configuration file (`config/better-options.php`) provides extensive customization options:
 
@@ -86,25 +70,15 @@ The published configuration file (`config/better-options.php`) provides extensiv
 <?php
 
 return [
-    // Icon system configuration
-    'icons' => [
-        'default_provider' => 'phosphor', // or 'heroicons'
-
-        'providers' => [
-            'phosphor' => \ToneGabes\BetterOptions\IconProviders\PhosphorIconProvider::class,
-            'heroicons' => \ToneGabes\BetterOptions\IconProviders\HeroIconProvider::class,
-            // Add your custom providers here
-        ],
-
-        'defaults' => [
-            'checkbox_idle' => null, // Override default icons
-            'checkbox_selected' => null,
-            'radio_idle' => null,
-            'radio_selected' => null,
-        ],
-    ],
-
-    // Default positions
+    /*
+    |--------------------------------------------------------------------------
+    | Default Positions
+    |--------------------------------------------------------------------------
+    |
+    | Configure the default positions for icons and indicators in each type
+    | of component. Possible values: 'before', 'after'
+    |
+    */
     'default_positions' => [
         'checkbox_list' => [
             'icon'      => 'after',
@@ -123,17 +97,10 @@ return [
             'indicator' => 'after',
         ],
     ],
-
-    // Performance settings
-    'performance' => [
-        'cache_icons' => true,
-        'cache_ttl' => 60, // minutes
-        'lazy_load_js' => true,
-    ],
 ];
 ```
 
-## Usage
+## 📖 Usage
 
 ### Basic Examples
 
@@ -145,14 +112,15 @@ use ToneGabes\BetterOptions\Forms\Components\RadioList;
 
 // Checkbox Cards with full features
 CheckboxCards::make('features')
+    ->label('Desired Features')
     ->options([
         'performance' => 'High Performance',
-        'security' => 'Enhanced Security',
+        'security' => 'Advanced Security',
         'scalability' => 'Auto Scaling',
     ])
     ->descriptions([
-        'performance' => 'Optimized for large datasets',
-        'security' => 'Enterprise-grade security',
+        'performance' => 'Optimized for large data volumes',
+        'security' => 'Enterprise-level security',
         'scalability' => 'Scales with your needs',
     ])
     ->extraTexts([
@@ -160,9 +128,9 @@ CheckboxCards::make('features')
         'security' => 'Popular',
     ])
     ->icons([
-        'performance' => 'heroicon-o-bolt',
-        'security' => 'heroicon-o-shield-check',
-        'scalability' => 'heroicon-o-arrow-trending-up',
+        'performance' => 'phosphor-lightning',
+        'security' => 'phosphor-shield-check',
+        'scalability' => 'phosphor-trend-up',
     ])
     ->columns(2)
     ->searchable()
@@ -170,6 +138,7 @@ CheckboxCards::make('features')
 
 // Simple Radio List
 RadioList::make('subscription_plan')
+    ->label('Subscription Plan')
     ->options([
         'free' => 'Free Plan',
         'pro' => 'Pro Plan',
@@ -178,62 +147,8 @@ RadioList::make('subscription_plan')
     ->descriptions([
         'free' => 'Perfect for getting started',
         'pro' => 'Great for growing teams',
-        'enterprise' => 'Full-featured solution',
+        'enterprise' => 'Complete solution',
     ]);
-```
-
-### Extensible Icon System
-
-The plugin now features a powerful, extensible icon system that supports multiple providers:
-
-```php
-// Using different icon providers
-CheckboxCards::make('features')
-    ->options([
-        'performance' => 'High Performance',
-        'security' => 'Enhanced Security',
-    ])
-    ->icons([
-        'performance' => 'lightning', // Auto-resolved by provider
-        'security' => 'heroicon-o-shield-check', // Explicit provider
-    ])
-    ->useIconProvider('phosphor') // Preferred provider
-    ->theme('modern'); // Pre-defined theme
-
-// Creating custom providers
-class FontAwesomeIconProvider implements IconProvider
-{
-    public function getName(): string
-    {
-        return 'fontawesome';
-    }
-
-    public function supports(string $iconName): bool
-    {
-        return str_starts_with($iconName, 'fa-');
-    }
-
-    // ... implement other methods
-}
-
-// Using the facade for direct icon resolution
-use ToneGabes\BetterOptions\Facades\BetterOptionsIcon;
-
-$icon = BetterOptionsIcon::resolveIcon('heart');
-$stats = BetterOptionsIcon::getStats();
-```
-
-### Cache Management
-
-Optimize performance with built-in caching:
-
-```bash
-# Cache management commands
-php artisan better-options:cache clear
-php artisan better-options:cache optimize
-php artisan better-options:cache preload
-php artisan better-options:cache stats
-php artisan better-options:cache health
 ```
 
 ### Advanced Features
@@ -242,6 +157,7 @@ php artisan better-options:cache health
 
 ```php
 CheckboxList::make('permissions')
+    ->label('User Permissions')
     ->options($this->getPermissionOptions())
     ->searchable()
     ->searchPrompt('Search permissions...')
@@ -250,12 +166,12 @@ CheckboxList::make('permissions')
     ->selectAllAction(
         Action::make('selectAll')
             ->label('Select All')
-            ->icon('heroicon-o-check-circle')
+            ->icon('phosphor-check-circle')
     )
     ->deselectAllAction(
         Action::make('deselectAll')
-            ->label('Clear All')
-            ->icon('heroicon-o-x-circle')
+            ->label('Clear Selection')
+            ->icon('phosphor-x-circle')
     );
 ```
 
@@ -276,33 +192,53 @@ CheckboxCards::make('tools')
 
 ```php
 RadioCards::make('theme')
+    ->label('Application Theme')
     ->options([
         'light' => 'Light Theme',
         'dark' => 'Dark Theme',
         'auto' => 'Auto Theme',
     ])
     ->icons([
-        'light' => 'heroicon-o-sun',
-        'dark' => 'heroicon-o-moon',
-        'auto' => 'heroicon-o-computer-desktop',
+        'light' => 'phosphor-sun',
+        'dark' => 'phosphor-moon',
+        'auto' => 'phosphor-circle-half',
     ])
-    ->idleIndicator('heroicon-o-circle')
-    ->selectedIndicator('heroicon-o-check-circle')
+    ->idleIndicator('phosphor-circle')
+    ->selectedIndicator('phosphor-check-circle')
     ->columns(3);
 ```
 
-### Available Components
+### Pre-defined Themes
 
-| Component       | Description                    | Features                               |
-| --------------- | ------------------------------ | -------------------------------------- |
-| `CheckboxList`  | Vertical list of checkboxes    | Search, Bulk toggle, Icons             |
-| `CheckboxCards` | Grid of checkbox cards         | All list features + Columns, Centering |
-| `RadioList`     | Vertical list of radio buttons | Icons, Custom indicators               |
-| `RadioCards`    | Grid of radio button cards     | All list features + Columns, Centering |
+```php
+// Modern Theme - Icons before, indicators after, centered
+CheckboxCards::make('options')
+    ->options($options)
+    ->theme('modern');
 
-### Component Methods
+// Minimal Theme - Subtle indicators
+CheckboxCards::make('options')
+    ->options($options)
+    ->theme('minimal');
 
-#### Common Methods (All Components)
+// Classic Theme - Traditional layout
+CheckboxCards::make('options')
+    ->options($options)
+    ->theme('classic');
+```
+
+## 📚 Available Components
+
+| Component        | Description                      | Features                                           |
+| ---------------- | -------------------------------- | -------------------------------------------------- |
+| `CheckboxList`   | Vertical list of checkboxes      | Search, Bulk toggle, Icons                        |
+| `CheckboxCards`  | Grid of checkbox cards           | All list features + Columns, Centering            |
+| `RadioList`      | Vertical list of radio buttons   | Icons, Custom indicators                           |
+| `RadioCards`     | Grid of radio button cards       | All list features + Columns, Centering            |
+
+## 🔧 Component Methods
+
+### Common Methods (All Components)
 
 ```php
 // Content
@@ -325,7 +261,7 @@ RadioCards::make('theme')
 ->partiallyHiddenIndicator(bool|Closure $condition = true)
 ```
 
-#### Checkbox-Specific Methods
+### Checkbox-Specific Methods
 
 ```php
 // Search functionality
@@ -339,17 +275,20 @@ RadioCards::make('theme')
 ->deselectAllAction(Action $action)
 ```
 
-#### Card-Specific Methods
+### Card-Specific Methods
 
 ```php
 // Layout
 ->columns(int|array $columns)
 ->itemsCenter(bool|Closure $condition = true)
+
+// Themes
+->theme(string $theme) // 'minimal', 'modern', 'classic'
 ```
 
-### Styling and Theming
+## 🎨 Styling and Themes
 
-The package uses Tailwind CSS classes and supports Filament's theming system. Key CSS classes:
+The package uses Tailwind CSS classes and supports Filament's theming system. Main CSS classes:
 
 ```css
 /* Component containers */
@@ -371,15 +310,15 @@ The package uses Tailwind CSS classes and supports Filament's theming system. Ke
 /* State classes */
 .is-selected
 .is-centered
-.is-indicator-partially-hidden;
+.is-indicator-partially-hidden
 ```
 
-### Performance Optimization
+## 🚀 Performance Optimization
 
 The package includes several performance optimizations:
 
 - **CSS Optimization**: Production builds use PurgeCSS to remove unused styles
-- **JavaScript Optimization**: Debounced search, cached DOM queries, batched operations
+- **JavaScript Optimization**: Debounced search, cached DOM queries, batch operations
 - **Lazy Loading**: Alpine.js components load only when needed
 
 To build optimized assets:
@@ -392,7 +331,108 @@ npm run build:dev
 npm run build
 ```
 
-## Development
+## 💡 Practical Examples
+
+### E-commerce - Category Selection
+
+```php
+CheckboxCards::make('product_categories')
+    ->label('Categories of Interest')
+    ->options([
+        'electronics' => 'Electronics',
+        'fashion' => 'Fashion & Clothing',
+        'home_garden' => 'Home & Garden',
+        'sports' => 'Sports & Leisure',
+    ])
+    ->icons([
+        'electronics' => 'phosphor-device-mobile',
+        'fashion' => 'phosphor-tshirt',
+        'home_garden' => 'phosphor-house',
+        'sports' => 'phosphor-soccer-ball',
+    ])
+    ->descriptions([
+        'electronics' => 'Smartphones, laptops, gadgets',
+        'fashion' => 'Men\'s and women\'s clothing',
+        'home_garden' => 'Decoration and gardening',
+        'sports' => 'Sports equipment',
+    ])
+    ->extraTexts([
+        'electronics' => 'Best seller',
+        'fashion' => 'Trending',
+    ])
+    ->theme('modern')
+    ->columns(2)
+    ->searchable()
+    ->bulkToggleable();
+```
+
+### Permission System
+
+```php
+CheckboxCards::make('user_permissions')
+    ->label('User Permissions')
+    ->options([
+        'users_read' => 'View Users',
+        'users_create' => 'Create Users',
+        'users_edit' => 'Edit Users',
+        'users_delete' => 'Delete Users',
+        'content_read' => 'View Content',
+        'content_create' => 'Create Content',
+    ])
+    ->icons([
+        'users_read' => 'phosphor-eye',
+        'users_create' => 'phosphor-user-plus',
+        'users_edit' => 'phosphor-user-gear',
+        'users_delete' => 'phosphor-user-minus',
+        'content_read' => 'phosphor-article',
+        'content_create' => 'phosphor-plus-circle',
+    ])
+    ->descriptions([
+        'users_read' => 'List and view user profiles',
+        'users_create' => 'Add new users to the system',
+        'users_edit' => 'Modify existing user data',
+        'users_delete' => 'Remove users from the system',
+        'content_read' => 'Access and view all content',
+        'content_create' => 'Create new posts and pages',
+    ])
+    ->extraTexts([
+        'users_delete' => 'Caution',
+        'content_create' => 'Popular',
+    ])
+    ->theme('minimal')
+    ->columns(3)
+    ->searchable()
+    ->bulkToggleable();
+```
+
+### Application Settings
+
+```php
+RadioCards::make('app_theme')
+    ->label('Application Theme')
+    ->options([
+        'light' => 'Light',
+        'dark' => 'Dark',
+        'auto' => 'Auto',
+        'high_contrast' => 'High Contrast',
+    ])
+    ->icons([
+        'light' => 'phosphor-sun',
+        'dark' => 'phosphor-moon',
+        'auto' => 'phosphor-circle-half',
+        'high_contrast' => 'phosphor-eye',
+    ])
+    ->descriptions([
+        'light' => 'Bright and clean interface',
+        'dark' => 'Dark interface, ideal for low-light environments',
+        'auto' => 'Follows system configuration',
+        'high_contrast' => 'Maximum contrast for accessibility',
+    ])
+    ->columns(2)
+    ->default('auto');
+```
+
+## 🛠️ Development
 
 ### Building Assets
 
@@ -431,31 +471,13 @@ composer format
 composer analyze
 ```
 
-## Changelog
+## 📝 Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## Upgrade Guide
+## 🤝 Contributing
 
-### From v1.x to v2.x
-
-**Breaking Changes:**
-
-- Configuration structure has changed
-- Some CSS classes have been renamed
-- Icon provider system introduced
-
-**Migration Steps:**
-
-1. Update your configuration file structure
-2. Replace any hardcoded Phosphor icon references
-3. Update custom CSS selectors if you have any
-
-See the [UPGRADE.md](UPGRADE.md) file for detailed migration instructions.
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
+Contributions are welcome! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 **Development Setup:**
 
@@ -466,15 +488,21 @@ We welcome contributions! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md) 
 5. Ensure all tests pass
 6. Submit a pull request
 
-## Security Vulnerabilities
+## 🔒 Security Vulnerabilities
 
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
-## Credits
+## 👥 Credits
 
 - [Tone Gabes](https://github.com/tonegabes) - Creator and maintainer
 - [All Contributors](../../contributors) - Thank you for your contributions!
 
-## License
+## 📄 License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+---
+
+<p align="center">
+  <strong>Made with ❤️ by <a href="https://tonegabes.com">Tone Gabes</a></strong>
+</p>
