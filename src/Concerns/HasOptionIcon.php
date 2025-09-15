@@ -9,20 +9,23 @@ use Closure;
 use Filament\Forms\Components\Concerns\HasIcons;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Config;
+use ToneGabes\BetterOptions\Enums\ComponentStyles;
+use ValueError;
 
 trait HasOptionIcon
 {
     use HasIcons;
 
-    protected ?string $componentStyle = null;
+    protected ?ComponentStyles $componentStyle = null;
 
     protected bool $isIconVisible = true;
 
     protected ?IconPosition $iconPosition = null;
 
-    public function setComponentStyle(string $componentStyle): void
+    public function setComponentStyle(ComponentStyles $style): void
     {
-        $this->componentStyle = $componentStyle;
+        $this->componentStyle = $style;
     }
 
     public function isIconVisible(): bool
@@ -103,10 +106,24 @@ trait HasOptionIcon
 
     public function getDefaultIconPosition(): IconPosition
     {
-        return match ($this->componentStyle) {
-            'cards' => IconPosition::Before,
-            'list'  => IconPosition::After,
-            default => IconPosition::Before,
-        };
+        if (! isset($this->componentType) || ! isset($this->componentStyle)) {
+            return IconPosition::After;
+        }
+
+        $position = Config::string(
+            'better-options.components.'
+            .$this->componentType->value
+            .'.'
+            .$this->componentStyle->value
+            .'.icon_position'
+        );
+
+        try {
+            $position = IconPosition::from($position);
+        } catch (ValueError $e) {
+            return IconPosition::After;
+        }
+
+        return $position;
     }
 }

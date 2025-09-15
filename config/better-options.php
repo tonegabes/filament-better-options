@@ -5,29 +5,33 @@ declare(strict_types=1);
 return [
     /*
     |--------------------------------------------------------------------------
-    | Posições Padrão
+    | Default Positions
     |--------------------------------------------------------------------------
     |
-    | Configure as posições padrão para ícones e indicadores em cada tipo
-    | de componente. Valores possíveis: 'before', 'after'
+    | Configure a default positions for icons and indicators in each type
+    | of component. Possible values: 'before', 'after'
     |
     */
-    'default_positions' => [
-        'checkbox_list' => [
-            'icon'      => 'after',
-            'indicator' => 'before',
+    'components' => [
+        'checkbox' => [
+            'list' => [
+                'icon_position'      => 'after',
+                'indicator_position' => 'before',
+            ],
+            'cards' => [
+                'icon_position'      => 'before',
+                'indicator_position' => 'after',
+            ],
         ],
-        'checkbox_cards' => [
-            'icon'      => 'before',
-            'indicator' => 'after',
-        ],
-        'radio_list' => [
-            'icon'      => 'after',
-            'indicator' => 'before',
-        ],
-        'radio_cards' => [
-            'icon'      => 'before',
-            'indicator' => 'after',
+        'radio' => [
+            'list' => [
+                'icon_position'      => 'after',
+                'indicator_position' => 'before',
+            ],
+            'cards' => [
+                'icon_position'      => 'before',
+                'indicator_position' => 'after',
+            ],
         ],
     ],
 ];

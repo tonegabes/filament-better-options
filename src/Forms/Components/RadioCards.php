@@ -14,6 +14,8 @@ use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
 use ToneGabes\BetterOptions\Concerns\HasItemsCenter;
 use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
+use ToneGabes\BetterOptions\Enums\ComponentStyles;
 
 class RadioCards extends Field implements CanDisableOptions
 {
@@ -32,14 +34,14 @@ class RadioCards extends Field implements CanDisableOptions
     use HasItemsCenter;
     use HasOptionIcon;
 
-    protected string $view = 'better-options::components.radio-cards';
+    protected string $view = 'better-options::components.radio.cards';
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setComponentType('radio');
-        $this->setComponentStyle('cards');
+        $this->setComponentType(ComponentTypes::Radio);
+        $this->setComponentStyle(ComponentStyles::Cards);
     }
 
     /**

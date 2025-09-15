@@ -1,8 +1,10 @@
 @php
+    use Filament\Support\Enums\GridDirection;
     use Filament\Support\Facades\FilamentAsset;
 
     $extraInputAttributeBag = $getExtraInputAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
+    $gridDirection = $getGridDirection() ?? GridDirection::Row;
     $isBulkToggleable = $isBulkToggleable();
     $isDisabled = $isDisabled();
     $isHtmlAllowed = $isHtmlAllowed();
@@ -24,7 +26,7 @@
         x-data="checkboxListFormComponent({
             livewireId: @js($this->getId()),
         })"
-        {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-list']) }}
+        {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-card']) }}
     >
 
         @if ($isSearchable && ! $isDisabled)
@@ -45,6 +47,7 @@
         <div
             {{
                 $getExtraAttributeBag()
+                    ->grid($getColumns(), $gridDirection)
                     ->merge([
                         'x-show' => $isSearchable ? 'visibleCheckboxListOptions.length' : null,
                     ], escape: false)
@@ -80,6 +83,7 @@
                     }"
                     @class([
                         'fi-fo-checkbox-option',
+                        'is-centered' => $isItemsCenter(),
                         'fi-invalid' => $errors->has($statePath),
                     ])
                     :class="{ 'is-selected': isSelected }"
@@ -120,7 +124,7 @@
                         @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
                     @endif
 
-                    <x-better-options::checkbox-content
+                    <x-better-options::checkbox.content
                         :label="$label"
                         :description="$getDescription($value)"
                         :extra-text="$getExtraText($value)"

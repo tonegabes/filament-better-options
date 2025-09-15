@@ -9,12 +9,16 @@ use Closure;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\Config;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
+use ToneGabes\BetterOptions\Enums\ComponentStyles;
 use ToneGabes\BetterOptions\Services\IconManagerService;
 use ToneGabes\Filament\Icons\Enums\Phosphor;
+use ValueError;
 
 trait HasIndicator
 {
-    protected ?string $componentType = null;
+    protected ?ComponentTypes $componentType = null;
 
     protected string|BackedEnum|Htmlable|null $idleIndicator = null;
 
@@ -26,9 +30,9 @@ trait HasIndicator
 
     protected bool $isIndicatorPartiallyHidden = false;
 
-    public function setComponentType(string $componentType): void
+    public function setComponentType(ComponentTypes $type): void
     {
-        $this->componentType = $componentType;
+        $this->componentType = $type;
     }
 
     public function idleIndicator(string|BackedEnum|Htmlable|null $idleIndicator): static
@@ -128,11 +132,26 @@ trait HasIndicator
 
     public function getDefaultIndicatorPosition(): IconPosition
     {
-        return match($this->componentStyle) {
-            'list'  => IconPosition::Before,
-            'cards' => IconPosition::After,
-            default => IconPosition::Before,
-        };
+        if (! isset($this->componentType) || ! isset($this->componentStyle)) {
+            return IconPosition::Before;
+        }
+
+        $position = Config::string(
+            'better-options.components.'
+            .$this->componentType->value
+            .'.'
+            .$this->componentStyle->value
+            .'.indicator_position'
+        );
+
+        try {
+            $position = IconPosition::from($position);
+        } catch (ValueError $e) {
+            return IconPosition::Before;
+        }
+
+        return $position;
+
     }
 
     public function getDefaultIdleIndicator(): string|BackedEnum|Htmlable

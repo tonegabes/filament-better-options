@@ -11,6 +11,8 @@ use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
 use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
+use ToneGabes\BetterOptions\Enums\ComponentStyles;
 
 class RadioList extends Field implements CanDisableOptions
 {
@@ -26,14 +28,14 @@ class RadioList extends Field implements CanDisableOptions
     use HasIndicator;
     use HasOptionIcon;
 
-    protected string $view = 'better-options::components.radio-list';
+    protected string $view = 'better-options::components.radio.list';
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setComponentType('radio');
-        $this->setComponentStyle('list');
+        $this->setComponentType(ComponentTypes::Radio);
+        $this->setComponentStyle(ComponentStyles::List);
     }
 
     /**

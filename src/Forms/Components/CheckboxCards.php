@@ -11,6 +11,8 @@ use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
 use ToneGabes\BetterOptions\Concerns\HasItemsCenter;
 use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
+use ToneGabes\BetterOptions\Enums\ComponentStyles;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
 
 class CheckboxCards extends CheckboxList
 {
@@ -21,14 +23,14 @@ class CheckboxCards extends CheckboxList
     use HasItemsCenter;
     use HasOptionIcon;
 
-    protected string $view = 'better-options::components.checkbox-cards';
+    protected string $view = 'better-options::components.checkbox.cards';
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setComponentType('checkbox');
-        $this->setComponentStyle('cards');
+        $this->setComponentType(ComponentTypes::Checkbox);
+        $this->setComponentStyle(ComponentStyles::Cards);
     }
 
     /**

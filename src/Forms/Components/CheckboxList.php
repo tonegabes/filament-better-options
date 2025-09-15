@@ -9,6 +9,8 @@ use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
 use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
+use ToneGabes\BetterOptions\Enums\ComponentStyles;
 
 class CheckboxList extends BaseCheckboxList
 {
@@ -17,13 +19,13 @@ class CheckboxList extends BaseCheckboxList
     use HasIndicator;
     use HasOptionIcon;
 
-    protected string $view = 'better-options::components.checkbox-list';
+    protected string $view = 'better-options::components.checkbox.list';
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->setComponentType('checkbox');
-        $this->setComponentStyle('list');
+        $this->setComponentType(ComponentTypes::Checkbox);
+        $this->setComponentStyle(ComponentStyles::List);
     }
 }

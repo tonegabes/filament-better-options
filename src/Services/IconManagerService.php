@@ -8,15 +8,16 @@ use BackedEnum;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
 use ToneGabes\BetterOptions\Forms\IndicatorsIconAlias;
 use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 class IconManagerService
 {
-    public static function resolveIndicatorIcon(?string $componentType, string $state): string|BackedEnum|Htmlable
+    public static function resolveIndicatorIcon(?ComponentTypes $componentType, string $state): string|BackedEnum|Htmlable
     {
         return match ($componentType) {
-            'checkbox' => match ($state) {
+            ComponentTypes::Checkbox => match ($state) {
                 'selected' => self::resolveIcon(
                     Phosphor::CheckSquareFill->getLabel(),
                     IndicatorsIconAlias::CHECKBOX_SELECTED
@@ -27,7 +28,7 @@ class IconManagerService
                 ),
 
             },
-            'radio' => match ($state) {
+            ComponentTypes::Radio => match ($state) {
                 'selected' => self::resolveIcon(
                     Phosphor::CheckCircleFill->getLabel(),
                     IndicatorsIconAlias::RADIO_SELECTED
