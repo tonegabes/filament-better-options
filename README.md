@@ -2,16 +2,15 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
 [![Total Downloads](https://img.shields.io/packagist/dt/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/tonegabes/filament-better-options/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/tonegabes/filament-better-options/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/tonegabes/filament-better-options/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/tonegabes/filament-better-options/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 
 Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `RadioList`, and `RadioCards` with icons, visual indicators, descriptions, extra texts, search functionality, and bulk operations.
 
 ## ✨ Features
 
-### 🎨 Enhanced UI Components
-- Modern card and list layouts
-- Extensible icon system with multiple providers (Phosphor, Heroicons)
+✨ **Enhanced UI Components**
+
+- Modern card-based and list layouts
+- Extensible icon system using Filament icons aliases
 - Flexible icon positioning (before/after)
 - Support for descriptions and extra texts
 - Pre-defined themes (minimal, modern, classic)
@@ -21,11 +20,10 @@ Enhanced form components for Filament Forms with modern interface, advanced feat
 - Bulk select/deselect operations for checkboxes
 - Configurable positioning and visibility
 - Performance-optimized JavaScript
-- Icon validation and debug tools
 
-### 🏗️ Extensible Architecture
-- Multiple icon provider support
-- Trait system for maximum flexibility
+🎨 **Extensible Architecture**
+
+- Multiple icon provider support (Phosphor, Heroicons, Font Awesome, etc.)
 - Tailwind CSS styling with dark mode support
 - Configurable default positions and icons via config file
 - Full accessibility support
@@ -50,7 +48,7 @@ Install the package via Composer:
 composer require tonegabes/filament-better-options
 ```
 
-Publish the configuration file:
+Optionally, publish the configuration file for positioning settings:
 
 ```bash
 php artisan vendor:publish --tag="better-options-config"
@@ -64,21 +62,12 @@ php artisan vendor:publish --tag="better-options-assets"
 
 ## ⚙️ Configuration
 
-The published configuration file (`config/better-options.php`) provides extensive customization options:
+The published configuration file (`config/better-options.php`) provides customization positioning options:
 
 ```php
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Default Positions
-    |--------------------------------------------------------------------------
-    |
-    | Configure the default positions for icons and indicators in each type
-    | of component. Possible values: 'before', 'after'
-    |
-    */
     'default_positions' => [
         'checkbox_list' => [
             'icon'      => 'after',
@@ -311,6 +300,7 @@ The package uses Tailwind CSS classes and supports Filament's theming system. Ma
 .is-selected
 .is-centered
 .is-indicator-partially-hidden
+.is-indicator-partially-hidden
 ```
 
 ## 🚀 Performance Optimization
@@ -331,162 +321,9 @@ npm run build:dev
 npm run build
 ```
 
-## 💡 Practical Examples
-
-### E-commerce - Category Selection
-
-```php
-CheckboxCards::make('product_categories')
-    ->label('Categories of Interest')
-    ->options([
-        'electronics' => 'Electronics',
-        'fashion' => 'Fashion & Clothing',
-        'home_garden' => 'Home & Garden',
-        'sports' => 'Sports & Leisure',
-    ])
-    ->icons([
-        'electronics' => 'phosphor-device-mobile',
-        'fashion' => 'phosphor-tshirt',
-        'home_garden' => 'phosphor-house',
-        'sports' => 'phosphor-soccer-ball',
-    ])
-    ->descriptions([
-        'electronics' => 'Smartphones, laptops, gadgets',
-        'fashion' => 'Men\'s and women\'s clothing',
-        'home_garden' => 'Decoration and gardening',
-        'sports' => 'Sports equipment',
-    ])
-    ->extraTexts([
-        'electronics' => 'Best seller',
-        'fashion' => 'Trending',
-    ])
-    ->theme('modern')
-    ->columns(2)
-    ->searchable()
-    ->bulkToggleable();
-```
-
-### Permission System
-
-```php
-CheckboxCards::make('user_permissions')
-    ->label('User Permissions')
-    ->options([
-        'users_read' => 'View Users',
-        'users_create' => 'Create Users',
-        'users_edit' => 'Edit Users',
-        'users_delete' => 'Delete Users',
-        'content_read' => 'View Content',
-        'content_create' => 'Create Content',
-    ])
-    ->icons([
-        'users_read' => 'phosphor-eye',
-        'users_create' => 'phosphor-user-plus',
-        'users_edit' => 'phosphor-user-gear',
-        'users_delete' => 'phosphor-user-minus',
-        'content_read' => 'phosphor-article',
-        'content_create' => 'phosphor-plus-circle',
-    ])
-    ->descriptions([
-        'users_read' => 'List and view user profiles',
-        'users_create' => 'Add new users to the system',
-        'users_edit' => 'Modify existing user data',
-        'users_delete' => 'Remove users from the system',
-        'content_read' => 'Access and view all content',
-        'content_create' => 'Create new posts and pages',
-    ])
-    ->extraTexts([
-        'users_delete' => 'Caution',
-        'content_create' => 'Popular',
-    ])
-    ->theme('minimal')
-    ->columns(3)
-    ->searchable()
-    ->bulkToggleable();
-```
-
-### Application Settings
-
-```php
-RadioCards::make('app_theme')
-    ->label('Application Theme')
-    ->options([
-        'light' => 'Light',
-        'dark' => 'Dark',
-        'auto' => 'Auto',
-        'high_contrast' => 'High Contrast',
-    ])
-    ->icons([
-        'light' => 'phosphor-sun',
-        'dark' => 'phosphor-moon',
-        'auto' => 'phosphor-circle-half',
-        'high_contrast' => 'phosphor-eye',
-    ])
-    ->descriptions([
-        'light' => 'Bright and clean interface',
-        'dark' => 'Dark interface, ideal for low-light environments',
-        'auto' => 'Follows system configuration',
-        'high_contrast' => 'Maximum contrast for accessibility',
-    ])
-    ->columns(2)
-    ->default('auto');
-```
-
-## 🛠️ Development
-
-### Building Assets
-
-```bash
-# Install dependencies
-npm install
-
-# Development build with watch
-npm run dev
-
-# Production build
-npm run build
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-composer test
-
-# Run specific test suites
-composer test-unit
-composer test-feature
-
-# Generate coverage report
-composer test-coverage
-```
-
-### Code Quality
-
-```bash
-# Format code
-composer format
-
-# Static analysis
-composer analyze
-```
-
 ## 📝 Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
-
-**Development Setup:**
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass
-6. Submit a pull request
 
 ## 🔒 Security Vulnerabilities
 
@@ -494,8 +331,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## 👥 Credits
 
-- [Tone Gabes](https://github.com/tonegabes) - Creator and maintainer
-- [All Contributors](../../contributors) - Thank you for your contributions!
+- [Tone Gabes](https://github.com/tonegabes)
+- [All Contributors](../../contributors)
 
 ## 📄 License
 
