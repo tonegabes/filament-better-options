@@ -1,5 +1,5 @@
 .fi-fo-radio-list {
-  @apply flex flex-col shadow-xs rounded-lg divide-y divide-gray-200 border border-gray-200;
+  @apply flex flex-col shadow-xs rounded-lg divide-y divide-gray-200 border border-gray-200 dark:divide-white/50 dark:border-white/20;
 
   & .fi-grid-direction-col {
     /* @apply -mt-4; */
@@ -18,7 +18,7 @@
   }
 
   & .fi-fo-radio-item {
-    @apply flex items-center justify-between gap-4 p-4 dark:border-white/20 hover:ring hover:ring-primary-500 cursor-pointer;
+    @apply flex items-center justify-between gap-4 p-4 hover:ring hover:ring-primary-500 cursor-pointer;
 
     & .fi-fo-radio-item__icon {
       @apply size-10 fill-gray-400 dark:fill-white/30 shrink-0;
