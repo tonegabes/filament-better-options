@@ -10,7 +10,7 @@
   }
 
   & .fi-fo-radio-card {
-    @apply flex gap-4 p-4 border border-gray-200 dark:border-white/20 rounded-lg cursor-pointer shadow-xs transition-all duration-200 ease-in-out;
+    @apply flex gap-4 p-4 border border-gray-200 dark:border-gray-800 rounded-lg cursor-pointer shadow-xs transition-all duration-200 ease-in-out;
 
     &:hover {
       @apply ring-1 ring-primary-500;

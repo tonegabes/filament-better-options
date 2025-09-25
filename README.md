@@ -5,7 +5,7 @@
 
 Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `RadioList`, and `RadioCards` with icons, visual indicators, descriptions, extra texts, search functionality, and bulk operations.
 
-## ✨ Features
+## Features
 
 ✨ **Enhanced UI Components**
 
@@ -15,7 +15,7 @@ Enhanced form components for Filament Forms with modern interface, advanced feat
 - Support for descriptions and extra texts
 - Pre-defined themes (minimal, modern, classic)
 
-### 🔍 Advanced Features
+### Advanced Features
 - Real-time search with debounced input
 - Bulk select/deselect operations for checkboxes
 - Configurable positioning and visibility
@@ -23,24 +23,23 @@ Enhanced form components for Filament Forms with modern interface, advanced feat
 
 🎨 **Extensible Architecture**
 
-- Multiple icon provider support (Phosphor, Heroicons, Font Awesome, etc.)
 - Tailwind CSS styling with dark mode support
 - Configurable default positions and icons via config file
 - Full accessibility support
 
-### ⚡ Performance & Caching
+### Performance & Caching
 - Intelligent icon caching system
 - Efficient DOM operations and caching
 - Alpine.js components loaded on demand
 - Minimal JavaScript footprint
 
-## 📋 Requirements
+## Requirements
 
 - PHP 8.3+
 - Laravel 11.0+
 - Filament 4.0+
 
-## 🚀 Installation
+## Installation
 
 Install the package via Composer:
 
@@ -60,7 +59,7 @@ Optionally, publish the assets for customization:
 php artisan vendor:publish --tag="better-options-assets"
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 The published configuration file (`config/better-options.php`) provides customization positioning options:
 
@@ -91,12 +90,15 @@ return [
 ];
 ```
 
-## 📖 Usage
+## Usage
 
 ### Basic Examples
 
+![Checkbox Cards Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/checkbox_cards.jpg)
+
 ```php
 use ToneGabes\BetterOptions\Forms\Components\CheckboxCards;
+use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 // Checkbox Cards with default features
 CheckboxCards::make('permissions')
@@ -123,61 +125,257 @@ CheckboxCards::make('permissions')
 ,
 ```
 
+![Checkbox List Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/checkbox_list.jpg)
+
+```php
+use ToneGabes\BetterOptions\Forms\Components\CheckboxList;
+use ToneGabes\Filament\Icons\Enums\Phosphor;
+
+// Checkbox List with default features
+CheckboxList::make('permissions')
+    ->label('Permissions')
+    ->options([
+        'view'   => 'View',
+        'edit'   => 'Edit',
+        'delete' => 'Delete',
+        'create' => 'Create',
+    ])
+    ->descriptions([
+        'view'   => 'Allows viewing the model.',
+        'edit'   => 'Allows editing the model.',
+        'delete' => 'Allows deleting the model.',
+        'create' => 'Allows creating a new model.',
+    ])
+    ->icons([
+        'view'   => Phosphor::Eye->thin(),
+        'edit'   => Phosphor::Pencil->thin(),
+        'delete' => Phosphor::Trash->thin(),
+        'create' => Phosphor::Plus->thin(),
+    ])
+,
+```
+
+![Radio Cards Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/radio_cards.jpg)
+
+```php
+use ToneGabes\BetterOptions\Forms\Components\RadioCards;
+use ToneGabes\Filament\Icons\Enums\Phosphor;
+
+// Radio Cards with default features
+RadioCards::make('role')
+    ->label('Role')
+    ->columns(2)
+    ->options([
+        'manager' => 'Manager',
+        'editor'  => 'Editor',
+        'viewer'  => 'Viewer',
+        'creator' => 'Creator',
+    ])
+    ->descriptions([
+        'manager' => 'Allows managing the model.',
+        'editor'  => 'Allows editing the model.',
+        'viewer'  => 'Allows viewing the model.',
+        'creator' => 'Allows creating a new model.',
+    ])
+    ->icons([
+        'manager' => Phosphor::Gear->thin(),
+        'editor'  => Phosphor::Pencil->thin(),
+        'viewer'  => Phosphor::Eye->thin(),
+        'creator' => Phosphor::Plus->thin(),
+    ])
+,
+```
+
+![Radio List Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/radio_list.jpg)
+
+```php
+use ToneGabes\BetterOptions\Forms\Components\RadioList;
+use ToneGabes\Filament\Icons\Enums\Phosphor;
+
+// Radio List with default features
+RadioList::make('role')
+    ->label('Role')
+    ->options([
+        'manager' => 'Manager',
+        'editor'  => 'Editor',
+        'viewer'  => 'Viewer',
+        'creator' => 'Creator',
+    ])
+    ->descriptions([
+        'manager' => 'Allows managing the model.',
+        'editor'  => 'Allows editing the model.',
+        'viewer'  => 'Allows viewing the model.',
+        'creator' => 'Allows creating a new model.',
+    ])
+    ->icons([
+        'manager' => Phosphor::Gear->thin(),
+        'editor'  => Phosphor::Pencil->thin(),
+        'viewer'  => Phosphor::Eye->thin(),
+        'creator' => Phosphor::Plus->thin(),
+    ])
+,
+```
+
+## Using Enums
+
+This package provides a convenient way to use PHP enums for defining options, descriptions, and icons. Here's how you can leverage enums in your component definitions:
+
+```php
+use Filament\Support\Contracts\HasDescription;
+use Filament\Support\Contracts\HasIcon;
+use Filament\Support\Contracts\HasLabel;
+use ToneGabes\BetterOptions\Contracts\HasExtraText;
+use ToneGabes\Filament\Icons\Enums\Phosphor;
+
+enum Roles: string implements HasDescription, HasExtraText, HasIcon, HasLabel {
+    case Manager = 'manager';
+    case Editor = 'editor';
+    case Viewer = 'viewer';
+    case Creator = 'creator';
+
+    public function getDescription(): string {
+        return match($this) {
+            self::Manager => 'Allows managing the model.',
+            self::Editor  => 'Allows editing the model.',
+            self::Viewer  => 'Allows viewing the model.',
+            self::Creator => 'Allows creating a new model.',
+        };
+    }
+
+    public function getExtraText(): string {
+        return match($this) {
+            self::Manager => 'model.manager',
+            self::Editor  => 'model.editor',
+            self::Viewer  => 'model.viewer',
+            self::Creator => 'model.creator',
+        };
+    }
+
+    public function getIcon(): string {
+        return match($this) {
+            self::Manager => Phosphor::Gear->thin(),
+            self::Editor  => Phosphor::Pencil->thin(),
+            self::Viewer  => Phosphor::Eye->thin(),
+            self::Creator => Phosphor::Plus->thin(),
+        };
+    }
+
+    public function getLabel(): string {
+        return match($this) {
+            self::Manager => 'Manager',
+            self::Editor  => 'Editor',
+            self::Viewer  => 'Viewer',
+            self::Creator => 'Creator',
+        };
+    }
+}
+```
+
+Passing a Backend Enum automatically maps the enum cases to the component options, descriptions, icons, and extra texts.
+
+```php
+RadioList::make('role')
+    ->label('Role')
+    ->enum(Roles::cases())
+
+    //  No need to specify these if enum is using filament enum contracts
+    // ->descriptions()
+    // ->icons()
+    // ->extraTexts()
+,
+```
+
+You can hide the descriptions, icons, and extra texts if you don't need them.
+
+```php
+RadioList::make('role')
+    ->enum(Roles::class)
+    ->hiddenDescriptions()
+    ->hiddenIcons()
+    ->hiddenExtraTexts()
+,
+
+// Accepts Closures
+RadioList::make('role')
+    ->enum(Roles::class)
+    ->hiddenDescription(fn () => false)
+    ->hiddenIcon(fn () => false)
+    ->hiddenExtraText(fn () => false)
+,
+```
+
 ### Advanced Features
 
 #### Search and Bulk Operations
 
 ```php
 CheckboxList::make('permissions')
-    ->label('User Permissions')
-    ->options($this->getPermissionOptions())
+    ->label('Permissions')
+    ->enum(Permissions::class)
     ->searchable()
     ->searchPrompt('Search permissions...')
-    ->searchDebounce('300ms')
     ->bulkToggleable()
-    ->selectAllAction(
-        Action::make('selectAll')
-            ->label('Select All')
-            ->icon('phosphor-check-circle')
-    )
-    ->deselectAllAction(
-        Action::make('deselectAll')
-            ->label('Clear Selection')
-            ->icon('phosphor-x-circle')
-    );
+,
 ```
+
+![Radio List Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/checkbox_list_search_bulk.jpg)
 
 #### Custom Positioning and Visibility
 
 ```php
-CheckboxCards::make('tools')
-    ->options($this->getToolOptions())
-    ->iconBefore()
-    ->indicatorAfter()
-    ->hiddenDescription(fn() => $this->compact_mode)
-    ->hiddenExtraText(fn() => !$this->show_pricing)
-    ->partiallyHiddenIndicator(fn() => $this->minimal_ui)
-    ->itemsCenter();
+RadioCards::make('role')
+    ->label('Role')
+    ->columns(2)
+    ->enum(Roles::class)
+    ->partiallyHiddenIndicator()
+    ->itemsCenter()
+    ->iconAfter()
+    ->indicatorBefore()
+
+    // ->hiddenIndicator() // You also can totaly hide the indicator
+,
 ```
+
+![Radio Cards Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/radio_cards_positioning.jpg)
 
 #### Icons and Indicators
 
 ```php
-RadioCards::make('theme')
-    ->label('Application Theme')
-    ->options([
-        'light' => 'Light Theme',
-        'dark' => 'Dark Theme',
-        'auto' => 'Auto Theme',
+RadioList::make('role')
+    ->label('Role')
+    ->enum(Roles::class)
+    ->idleIndicator(Phosphor::User->thin())
+    ->selectedIndicator(Phosphor::User->fill())
+,
+```
+
+![Radio List Indicators Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/radio_list_indicators.jpg)
+
+#### Extra Texts/Values
+
+```php
+CheckboxCards::make('permissions')
+    ->label('Permissions')
+    ->columns(2)
+    ->enum(Permissions::class)
+    ->extraTexts([
+        'view'   => 'model.view',
+        'edit'   => 'model.edit',
+        'delete' => 'model.delete',
+        'create' => 'model.create',
     ])
-    ->icons([
-        'light' => 'phosphor-sun',
-        'dark' => 'phosphor-moon',
-        'auto' => 'phosphor-circle-half',
-    ])
-    ->idleIndicator('phosphor-circle')
-    ->selectedIndicator('phosphor-check-circle')
-    ->columns(3);
+,
+```
+
+![Checkbox Cards Extratexts Demo](https://raw.githubusercontent.com/tonegabes/filament-better-options/refs/heads/main/images/checkbox_cards_extratexts.jpg)
+
+```php
+RadioCard::make('storage')
+    ->enum(Storages::class)
+    ->hiddenIcon()
+    ->partiallyHiddenIndicator()
+    ->idleIndicator(Phosphor::HardDrives->thin())
+    ->selectedIndicator(Phosphor::HardDrives->fill())
 ```
 
 ### Pre-defined Themes
@@ -199,7 +397,9 @@ CheckboxCards::make('options')
     ->theme('classic');
 ```
 
-## 📚 Available Components
+
+
+## Available Components
 
 | Component        | Description                      | Features                                           |
 | ---------------- | -------------------------------- | -------------------------------------------------- |
@@ -208,7 +408,7 @@ CheckboxCards::make('options')
 | `RadioList`      | Vertical list of radio buttons   | Icons, Custom indicators                           |
 | `RadioCards`     | Grid of radio button cards       | All list features + Columns, Centering            |
 
-## 🔧 Component Methods
+## Component Methods
 
 ### Common Methods (All Components)
 
@@ -239,7 +439,6 @@ CheckboxCards::make('options')
 // Search functionality
 ->searchable(bool $condition = true)
 ->searchPrompt(string $prompt)
-->searchDebounce(string $debounce = '500ms')
 
 // Bulk operations
 ->bulkToggleable(bool $condition = true)
@@ -253,12 +452,9 @@ CheckboxCards::make('options')
 // Layout
 ->columns(int|array $columns)
 ->itemsCenter(bool|Closure $condition = true)
-
-// Themes
-->theme(string $theme) // 'minimal', 'modern', 'classic'
 ```
 
-## 🎨 Styling and Themes
+## Styling and Themes
 
 The package uses Tailwind CSS classes and supports Filament's theming system. Main CSS classes:
 
@@ -286,38 +482,12 @@ The package uses Tailwind CSS classes and supports Filament's theming system. Ma
 .is-indicator-partially-hidden
 ```
 
-## 🚀 Performance Optimization
-
-The package includes several performance optimizations:
-
-- **CSS Optimization**: Production builds use PurgeCSS to remove unused styles
-- **JavaScript Optimization**: Debounced search, cached DOM queries, batch operations
-- **Lazy Loading**: Alpine.js components load only when needed
-
-To build optimized assets:
-
-```bash
-# Development build
-npm run build:dev
-
-# Production build (with PurgeCSS)
-npm run build
-```
-
-## 📝 Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## 🔒 Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## 👥 Credits
+## Credits
 
 - [Tone Gabes](https://github.com/tonegabes)
 - [All Contributors](../../contributors)
 
-## 📄 License
+## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
