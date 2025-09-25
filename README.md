@@ -65,25 +65,27 @@ php artisan vendor:publish --tag="better-options-assets"
 The published configuration file (`config/better-options.php`) provides customization positioning options:
 
 ```php
-<?php
-
 return [
-    'default_positions' => [
-        'checkbox_list' => [
-            'icon'      => 'after',
-            'indicator' => 'before',
+    'components' => [
+        'checkbox' => [
+            'list' => [
+                'icon_position'      => 'after',
+                'indicator_position' => 'before',
+            ],
+            'cards' => [
+                'icon_position'      => 'before',
+                'indicator_position' => 'after',
+            ],
         ],
-        'checkbox_cards' => [
-            'icon'      => 'before',
-            'indicator' => 'after',
-        ],
-        'radio_list' => [
-            'icon'      => 'after',
-            'indicator' => 'before',
-        ],
-        'radio_cards' => [
-            'icon'      => 'before',
-            'indicator' => 'after',
+        'radio' => [
+            'list' => [
+                'icon_position'      => 'after',
+                'indicator_position' => 'before',
+            ],
+            'cards' => [
+                'icon_position'      => 'before',
+                'indicator_position' => 'after',
+            ],
         ],
     ],
 ];
@@ -95,49 +97,30 @@ return [
 
 ```php
 use ToneGabes\BetterOptions\Forms\Components\CheckboxCards;
-use ToneGabes\BetterOptions\Forms\Components\CheckboxList;
-use ToneGabes\BetterOptions\Forms\Components\RadioCards;
-use ToneGabes\BetterOptions\Forms\Components\RadioList;
 
-// Checkbox Cards with full features
-CheckboxCards::make('features')
-    ->label('Desired Features')
+// Checkbox Cards with default features
+CheckboxCards::make('permissions')
+    ->label('Permissions')
+    ->columns(2)
     ->options([
-        'performance' => 'High Performance',
-        'security' => 'Advanced Security',
-        'scalability' => 'Auto Scaling',
+        'view'   => 'View',
+        'edit'   => 'Edit',
+        'delete' => 'Delete',
+        'create' => 'Create',
     ])
     ->descriptions([
-        'performance' => 'Optimized for large data volumes',
-        'security' => 'Enterprise-level security',
-        'scalability' => 'Scales with your needs',
-    ])
-    ->extraTexts([
-        'performance' => 'Recommended',
-        'security' => 'Popular',
+        'view'   => 'Allows viewing the model.',
+        'edit'   => 'Allows editing the model.',
+        'delete' => 'Allows deleting the model.',
+        'create' => 'Allows creating a new model.',
     ])
     ->icons([
-        'performance' => 'phosphor-lightning',
-        'security' => 'phosphor-shield-check',
-        'scalability' => 'phosphor-trend-up',
+        'view'   => Phosphor::Eye->thin(),
+        'edit'   => Phosphor::Pencil->thin(),
+        'delete' => Phosphor::Trash->thin(),
+        'create' => Phosphor::Plus->thin(),
     ])
-    ->columns(2)
-    ->searchable()
-    ->bulkToggleable();
-
-// Simple Radio List
-RadioList::make('subscription_plan')
-    ->label('Subscription Plan')
-    ->options([
-        'free' => 'Free Plan',
-        'pro' => 'Pro Plan',
-        'enterprise' => 'Enterprise Plan',
-    ])
-    ->descriptions([
-        'free' => 'Perfect for getting started',
-        'pro' => 'Great for growing teams',
-        'enterprise' => 'Complete solution',
-    ]);
+,
 ```
 
 ### Advanced Features
