@@ -75,7 +75,7 @@
                         updateSelectedState() {
                             const currentValue = $wire.get('{{ $statePath }}');
                             const value = Array.isArray(currentValue) ? currentValue : [];
-                            this.isSelected = value.includes('{{ $value }}');
+                            this.isSelected = value.map(String).includes(String(@js($value)));
                         }
                     }"
                     @class([

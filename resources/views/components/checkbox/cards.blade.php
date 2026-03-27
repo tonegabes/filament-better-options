@@ -67,13 +67,18 @@
                     @endif
 
                     x-data="{
-                        optionValue: @js($value),
-                        isSelected: @js(in_array($value, (array) ($getState() ?? $getDefaultState() ?? []), true)),
+                        isSelected: false,
                         init() {
-                            this.$watch('$wire.{{ $statePath }}', (newValue) => {
-                                const value = Array.isArray(newValue) ? newValue : [];
-                                this.isSelected = value.includes(this.optionValue);
+                            this.updateSelectedState();
+
+                            this.$watch('$wire.{{ $statePath }}', () => {
+                                this.updateSelectedState();
                             });
+                        },
+                        updateSelectedState() {
+                            const currentValue = $wire.get('{{ $statePath }}');
+                            const value = Array.isArray(currentValue) ? currentValue : [];
+                            this.isSelected = value.map(String).includes(String(@js($value)));
                         }
                     }"
                     @class([
@@ -86,7 +91,6 @@
                     :aria-checked="isSelected"
                     :aria-selected="isSelected"
                     :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
-                    for="{{ $itemId }}"
                     tabindex="0"
                 >
                     <input
