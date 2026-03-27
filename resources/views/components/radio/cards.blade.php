@@ -44,10 +44,10 @@
                     'is-centered' => $isItemsCenter(),
                 ])
                 x-data="{
-                    isSelected: @js(String($getState() ?? $getDefaultState() ?? '') === String($value)),
+                    isSelected: @js(($getState() ?? $getDefaultState() ?? '') === $value),
                     init() {
                         this.$watch('$wire.{{ $statePath }}', (newValue) => {
-                            this.isSelected = String(newValue ?? '') === '{{ $value }}';
+                            this.isSelected = (newValue ?? '') === '{{ $value }}';
                         });
                     }
                 }"
