@@ -26,6 +26,8 @@
         @foreach ($getOptions() as $value => $label)
             @php
                 $itemId = "$id-$value";
+                $optionColor = $getOptionColor($value);
+                $optionStyles = $getOptionColorStyles($optionColor);
                 $inputAttributes = $extraInputAttributeBag
                     ->merge([
                         'disabled' => $isDisabled || $isOptionDisabled($value, $label),
@@ -57,6 +59,7 @@
                 :aria-selected="isSelected"
                 for="{{ $itemId }}"
                 :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
+                style="{{ $optionStyles }}"
                 tabindex="0"
             >
                 @if ($isIndicatorBefore() && $isIndicatorVisible())

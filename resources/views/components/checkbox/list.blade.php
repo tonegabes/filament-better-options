@@ -54,6 +54,8 @@
             @forelse ($options as $value => $label)
                 @php
                     $itemId = $getId()."-".$value;
+                    $optionColor = $getOptionColor($value);
+                    $optionStyles = $getOptionColorStyles($optionColor);
                 @endphp
 
                 <label
@@ -88,6 +90,7 @@
                     :aria-selected="isSelected"
                     :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
                     for="{{ $itemId }}"
+                    style="{{ $optionStyles }}"
                     tabindex="0"
                 >
                     <input

@@ -11,10 +11,10 @@
 <x-dynamic-component
     :component="$fieldWrapperView"
     :field="$field"
-    class="fi-fo-radio-list-wrapper"
+    class="fi-fo-radio-stacked-cards-wrapper"
 >
     <div
-        {{ $getExtraAttributeBag()->class(['fi-fo-radio-list'])}}
+        {{ $getExtraAttributeBag()->class(['fi-fo-radio-stacked-cards']) }}
     >
         @foreach ($getOptions() as $value => $label)
             @php
@@ -34,21 +34,16 @@
 
             <label
                 @class([
-                    'fi-fo-radio-item group/radio-item',
+                    'fi-fo-radio-card fi-fo-radio-stacked-card group/radio-card',
                     'fi-invalid' => $errors->has($statePath),
+                    'is-centered' => $isItemsCenter(),
                 ])
                 x-data="{
-                    isSelected: false,
+                    isSelected: @js(($getState() ?? $getDefaultState() ?? '') === $value),
                     init() {
-                        this.updateSelectedState();
-
-                        this.$watch('$wire.{{ $statePath }}', () => {
-                            this.updateSelectedState();
+                        this.$watch('$wire.{{ $statePath }}', (newValue) => {
+                            this.isSelected = (newValue ?? '') === '{{ $value }}';
                         });
-                    },
-                    updateSelectedState() {
-                        const currentValue = $wire.get('{{ $statePath }}');
-                        this.isSelected = (currentValue ?? '') === '{{ $value }}';
                     }
                 }"
                 :class="{ 'is-selected': isSelected }"
@@ -60,41 +55,40 @@
                 style="{{ $optionStyles }}"
                 tabindex="0"
             >
+                @if ($isIndicatorBefore() && $isIndicatorVisible())
+                    <x-better-options::option-indicator
+                        ::is-selected="isSelected"
+                        :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
+                        :idle-indicator="$getIdleIndicator()"
+                        :selected-indicator="$getSelectedIndicator()"
+                        class="fi-fo-radio-card__indicator"
+                    />
+                @endif
 
-                    @if ($isIndicatorBefore() && $isIndicatorVisible())
-                        <x-better-options::option-indicator
-                            ::is-selected="isSelected"
-                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
-                            :idle-indicator="$getIdleIndicator()"
-                            :selected-indicator="$getSelectedIndicator()"
-                            class="fi-fo-radio-item__indicator"
-                        />
-                    @endif
+                @if ($hasIcon($value) && $isIconBefore())
+                    @svg($getIcon($value), ['class' => 'fi-fo-radio-card__icon'])
+                @endif
 
-                    @if ($hasIcon($value) && $isIconBefore())
-                        @svg($getIcon($value), ['class' => 'fi-fo-radio-item__icon'])
-                    @endif
-
-                <div class="fi-fo-radio-item__content">
-                    <div class="fi-fo-radio-item__header">
-                        <p class="fi-fo-radio-item__label">{{ $label }}</p>
+                <div class="fi-fo-radio-card__content">
+                    <div class="fi-fo-radio-card__header">
+                        <p class="fi-fo-radio-card__label">{{ $label }}</p>
 
                         @if ($hasDescription($value) && $isDescriptionVisible())
-                            <p class="fi-fo-radio-item__description">
+                            <p class="fi-fo-radio-card__description">
                                 {{ $getDescription($value) }}
                             </p>
                         @endif
                     </div>
+
+                    @if ($hasExtraText($value) && $isExtraTextVisible())
+                        <p class="fi-fo-radio-card__extra">
+                            {{ $getExtraText($value) }}
+                        </p>
+                    @endif
                 </div>
 
-                @if ($hasExtraText($value) && $isExtraTextVisible())
-                    <p class="fi-fo-radio-item__extra">
-                        {{ $getExtraText($value) }}
-                    </p>
-                @endif
-
                 @if ($hasIcon($value) && $isIconAfter())
-                    @svg($getIcon($value), ['class' => 'fi-fo-radio-item__icon'])
+                    @svg($getIcon($value), ['class' => 'fi-fo-radio-card__icon'])
                 @endif
 
                 @if ($isIndicatorAfter() && $isIndicatorVisible())
@@ -103,13 +97,13 @@
                         :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
                         :idle-indicator="$getIdleIndicator()"
                         :selected-indicator="$getSelectedIndicator()"
-                        class="fi-fo-radio-item__indicator"
+                        class="fi-fo-radio-card__indicator"
                     />
                 @endif
 
                 <input
                     type="radio"
-                    {{ $inputAttributes->class(['hidden'])}}
+                    {{ $inputAttributes->class(['hidden']) }}
                 />
             </label>
         @endforeach

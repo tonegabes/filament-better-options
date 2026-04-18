@@ -1,10 +1,8 @@
 @php
-    use Filament\Support\Enums\GridDirection;
     use Filament\Support\Facades\FilamentAsset;
 
     $extraInputAttributeBag = $getExtraInputAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
-    $gridDirection = $getGridDirection() ?? GridDirection::Row;
     $isBulkToggleable = $isBulkToggleable();
     $isDisabled = $isDisabled();
     $isHtmlAllowed = $isHtmlAllowed();
@@ -26,9 +24,8 @@
         x-data="checkboxListFormComponent({
             livewireId: @js($this->getId()),
         })"
-        {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-card']) }}
+        {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-table']) }}
     >
-
         @if ($isSearchable && ! $isDisabled)
             <x-better-options::search-input
                 :search-prompt="$getSearchPrompt()"
@@ -47,12 +44,12 @@
         <div
             {{
                 $getExtraAttributeBag()
-                    ->grid($getColumns(), $gridDirection)
                     ->merge([
                         'x-show' => $isSearchable ? 'visibleCheckboxListOptions.length' : null,
                     ], escape: false)
-                    ->class(['fi-fo-checkbox-options'])
+                    ->class(['fi-fo-checkbox-table-options'])
             }}
+            role="table"
         >
             @forelse ($options as $value => $label)
                 @php
@@ -69,27 +66,21 @@
                     @endif
 
                     x-data="{
-                        isSelected: false,
+                        optionValue: @js($value),
+                        isSelected: @js(in_array($value, (array) ($getState() ?? $getDefaultState() ?? []), true)),
                         init() {
-                            this.updateSelectedState();
-
-                            this.$watch('$wire.{{ $statePath }}', () => {
-                                this.updateSelectedState();
+                            this.$watch('$wire.{{ $statePath }}', (newValue) => {
+                                const value = Array.isArray(newValue) ? newValue : [];
+                                this.isSelected = value.includes(this.optionValue);
                             });
-                        },
-                        updateSelectedState() {
-                            const currentValue = $wire.get('{{ $statePath }}');
-                            const value = Array.isArray(currentValue) ? currentValue : [];
-                            this.isSelected = value.map(String).includes(String(@js($value)));
                         }
                     }"
                     @class([
-                        'fi-fo-checkbox-option',
-                        'is-centered' => $isItemsCenter(),
+                        'fi-fo-checkbox-option fi-fo-checkbox-table-row',
                         'fi-invalid' => $errors->has($statePath),
                     ])
                     :class="{ 'is-selected': isSelected }"
-                    role="checkbox"
+                    role="row"
                     :aria-checked="isSelected"
                     :aria-selected="isSelected"
                     :aria-disabled="{{ $isDisabled ? 'true' : 'false' }}"
@@ -114,40 +105,50 @@
                     />
 
                     @if ($isIndicatorBefore() && $isIndicatorVisible())
-                        <x-better-options::option-indicator
-                            ::is-selected="isSelected"
-                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
-                            :idle-indicator="$getIdleIndicator()"
-                            :selected-indicator="$getSelectedIndicator()"
-                            class="fi-fo-checkbox-option__indicator"
-                        />
+                        <div class="fi-fo-checkbox-table-cell fi-fo-checkbox-table-cell--indicator" role="cell">
+                            <x-better-options::option-indicator
+                                ::is-selected="isSelected"
+                                :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
+                                :idle-indicator="$getIdleIndicator()"
+                                :selected-indicator="$getSelectedIndicator()"
+                                class="fi-fo-checkbox-option__indicator"
+                            />
+                        </div>
                     @endif
 
                     @if ($hasIcon($value) && $isIconBefore())
-                        @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
+                        <div class="fi-fo-checkbox-table-cell fi-fo-checkbox-table-cell--icon" role="cell">
+                            @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
+                        </div>
                     @endif
 
-                    <x-better-options::checkbox.content
-                        :label="$label"
-                        :description="$getDescription($value)"
-                        :extra-text="$getExtraText($value)"
-                        :is-html-allowed="$isHtmlAllowed"
-                        :show-description="$hasDescription($value) && $isDescriptionVisible()"
-                        :show-extra-text="$hasExtraText($value) && $isExtraTextVisible()"
-                    />
+                    <div class="fi-fo-checkbox-table-cell fi-fo-checkbox-table-cell--content" role="cell">
+                        <x-better-options::checkbox.content
+                            :label="$label"
+                            :description="$getDescription($value)"
+                            :extra-text="$getExtraText($value)"
+                            :is-html-allowed="$isHtmlAllowed"
+                            :show-description="$hasDescription($value) && $isDescriptionVisible()"
+                            :show-extra-text="$hasExtraText($value) && $isExtraTextVisible()"
+                        />
+                    </div>
 
                     @if ($hasIcon($value) && $isIconAfter())
-                        @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
+                        <div class="fi-fo-checkbox-table-cell fi-fo-checkbox-table-cell--icon" role="cell">
+                            @svg($getIcon($value), ['class' => 'fi-fo-checkbox-option__icon'])
+                        </div>
                     @endif
 
                     @if ($isIndicatorAfter() && $isIndicatorVisible())
-                        <x-better-options::option-indicator
-                            ::is-selected="isSelected"
-                            :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
-                            :idle-indicator="$getIdleIndicator()"
-                            :selected-indicator="$getSelectedIndicator()"
-                            class="fi-fo-checkbox-option__indicator"
-                        />
+                        <div class="fi-fo-checkbox-table-cell fi-fo-checkbox-table-cell--indicator" role="cell">
+                            <x-better-options::option-indicator
+                                ::is-selected="isSelected"
+                                :is-indicator-partially-hidden="$isIndicatorPartiallyHidden()"
+                                :idle-indicator="$getIdleIndicator()"
+                                :selected-indicator="$getSelectedIndicator()"
+                                class="fi-fo-checkbox-option__indicator"
+                            />
+                        </div>
                     @endif
                 </label>
             @empty

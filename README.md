@@ -3,7 +3,14 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
 [![Total Downloads](https://img.shields.io/packagist/dt/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
 
-Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `RadioList`, and `RadioCards` with icons, visual indicators, descriptions, extra texts, search functionality, and bulk operations.
+Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `CheckboxStackedCards`, `CheckboxTable`, `RadioList`, `RadioCards`, `RadioStackedCards` and `RadioTable` with icons, visual indicators, descriptions, extra texts, per-option colors, search functionality, and bulk operations.
+
+## Available components
+
+| Family   | List             | Cards             | Stacked Cards              | Table              |
+| -------- | ---------------- | ----------------- | -------------------------- | ------------------ |
+| Checkbox | `CheckboxList`   | `CheckboxCards`   | `CheckboxStackedCards`     | `CheckboxTable`    |
+| Radio    | `RadioList`      | `RadioCards`      | `RadioStackedCards`        | `RadioTable`       |
 
 ## Features
 
@@ -40,6 +47,10 @@ Enhanced form components for Filament Forms with modern interface, advanced feat
 - Filament 5.0+
 - Livewire 4.0+
 - Tailwind CSS 4.0+
+
+### Optional
+
+- [`tonegabes/filament-phosphor-icons`](https://github.com/tonegabes/filament-phosphor-icons) ^1.3 — when installed, Phosphor icons are used as defaults for indicators. Without it the package falls back to Heroicons aliases. You can always override defaults via `config('better-options.icons.defaults')`.
 
 ## Installation
 
@@ -403,12 +414,40 @@ CheckboxCards::make('options')
 
 ## Available Components
 
-| Component        | Description                      | Features                                           |
-| ---------------- | -------------------------------- | -------------------------------------------------- |
-| `CheckboxList`   | Vertical list of checkboxes      | Search, Bulk toggle, Icons                        |
-| `CheckboxCards`  | Grid of checkbox cards           | All list features + Columns, Centering            |
-| `RadioList`      | Vertical list of radio buttons   | Icons, Custom indicators                           |
-| `RadioCards`     | Grid of radio button cards       | All list features + Columns, Centering            |
+| Component              | Description                               | Features                                           |
+| ---------------------- | ----------------------------------------- | -------------------------------------------------- |
+| `CheckboxList`         | Vertical list of checkboxes               | Search, Bulk toggle, Icons                         |
+| `CheckboxCards`        | Grid of checkbox cards                    | All list features + Columns, Centering             |
+| `CheckboxStackedCards` | Vertically stacked checkbox cards         | All cards features with joined borders             |
+| `CheckboxTable`        | Checkbox options in a responsive table    | Search, Bulk toggle, Icons                         |
+| `RadioList`            | Vertical list of radio buttons            | Extends native `Radio`, icons, custom indicators   |
+| `RadioCards`           | Grid of radio button cards                | All list features + Columns, Centering, Themes     |
+| `RadioStackedCards`    | Vertically stacked radio cards            | All cards features with joined borders             |
+| `RadioTable`           | Radio options in a responsive table       | Icons, indicators                                  |
+
+### Color by enum
+
+Every component supports a per-option color. When the associated enum implements
+`Filament\Support\Contracts\HasColor`, each case's `getColor()` is used automatically
+to tint its option:
+
+```php
+use ToneGabes\BetterOptions\Forms\Components\CheckboxStackedCards;
+
+CheckboxStackedCards::make('roles')
+    ->options(RolesEnum::class);
+```
+
+You can also provide colors explicitly, bypassing the enum contract:
+
+```php
+CheckboxList::make('priority')
+    ->options(['low' => 'Low', 'high' => 'High'])
+    ->optionColors([
+        'low'  => 'gray',
+        'high' => 'danger',
+    ]);
+```
 
 ## Component Methods
 

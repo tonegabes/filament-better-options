@@ -8,4 +8,6 @@ enum ComponentStyles: string
 {
     case List = 'list';
     case Cards = 'cards';
+    case StackedCards = 'stacked_cards';
+    case Table = 'table';
 }

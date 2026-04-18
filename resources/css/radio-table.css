@@ -1,0 +1,59 @@
+.fi-fo-radio-table-wrapper .fi-fo-radio-table {
+  @apply flex flex-col border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900;
+
+  & .fi-fo-radio-table-row {
+    @apply grid grid-cols-[auto_auto_1fr_auto] items-center gap-3 p-3 cursor-pointer transition-colors duration-150 ease-in-out;
+
+    &:hover:not(.is-selected) {
+      @apply bg-gray-50 dark:bg-white/5;
+    }
+
+    & .fi-fo-radio-table-cell {
+      @apply flex items-center;
+    }
+
+    & .fi-fo-radio-item__indicator {
+      @apply size-5 fill-gray-400 shrink-0 transition-opacity duration-200 ease-in-out;
+    }
+
+    & .fi-fo-radio-item__icon {
+      @apply size-6 text-gray-400 dark:text-gray-700 shrink-0;
+    }
+
+    & .fi-fo-radio-item__header {
+      @apply flex flex-col grow;
+    }
+
+    & .fi-fo-radio-item__label {
+      @apply overflow-hidden font-medium break-words text-gray-950 dark:text-white;
+    }
+
+    & .fi-fo-radio-item__description {
+      @apply text-gray-500 dark:text-gray-400;
+    }
+
+    & .fi-fo-radio-item__extra {
+      @apply text-gray-900 dark:text-gray-50 mt-1;
+    }
+
+    &.fi-invalid {
+      @apply bg-red-50 dark:bg-red-950/20;
+
+      & .fi-fo-radio-item__indicator {
+        @apply fill-red-500;
+      }
+    }
+
+    &.is-selected {
+      background-color: color-mix(in oklab, var(--color-primary-500) 8%, transparent);
+
+      & .fi-fo-radio-item__indicator {
+        fill: var(--color-primary-500);
+      }
+
+      & .fi-fo-radio-item__icon {
+        color: var(--color-primary-500);
+      }
+    }
+  }
+}

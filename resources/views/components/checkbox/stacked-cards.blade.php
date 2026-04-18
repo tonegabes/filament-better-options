@@ -1,10 +1,8 @@
 @php
-    use Filament\Support\Enums\GridDirection;
     use Filament\Support\Facades\FilamentAsset;
 
     $extraInputAttributeBag = $getExtraInputAttributeBag();
     $fieldWrapperView = $getFieldWrapperView();
-    $gridDirection = $getGridDirection() ?? GridDirection::Row;
     $isBulkToggleable = $isBulkToggleable();
     $isDisabled = $isDisabled();
     $isHtmlAllowed = $isHtmlAllowed();
@@ -26,9 +24,8 @@
         x-data="checkboxListFormComponent({
             livewireId: @js($this->getId()),
         })"
-        {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-card']) }}
+        {{ $getExtraAlpineAttributeBag()->class(['fi-fo-checkbox-stacked-cards']) }}
     >
-
         @if ($isSearchable && ! $isDisabled)
             <x-better-options::search-input
                 :search-prompt="$getSearchPrompt()"
@@ -47,11 +44,10 @@
         <div
             {{
                 $getExtraAttributeBag()
-                    ->grid($getColumns(), $gridDirection)
                     ->merge([
                         'x-show' => $isSearchable ? 'visibleCheckboxListOptions.length' : null,
                     ], escape: false)
-                    ->class(['fi-fo-checkbox-options'])
+                    ->class(['fi-fo-checkbox-stacked-cards-options'])
             }}
         >
             @forelse ($options as $value => $label)
@@ -69,22 +65,17 @@
                     @endif
 
                     x-data="{
-                        isSelected: false,
+                        optionValue: @js($value),
+                        isSelected: @js(in_array($value, (array) ($getState() ?? $getDefaultState() ?? []), true)),
                         init() {
-                            this.updateSelectedState();
-
-                            this.$watch('$wire.{{ $statePath }}', () => {
-                                this.updateSelectedState();
+                            this.$watch('$wire.{{ $statePath }}', (newValue) => {
+                                const value = Array.isArray(newValue) ? newValue : [];
+                                this.isSelected = value.includes(this.optionValue);
                             });
-                        },
-                        updateSelectedState() {
-                            const currentValue = $wire.get('{{ $statePath }}');
-                            const value = Array.isArray(currentValue) ? currentValue : [];
-                            this.isSelected = value.map(String).includes(String(@js($value)));
                         }
                     }"
                     @class([
-                        'fi-fo-checkbox-option',
+                        'fi-fo-checkbox-option fi-fo-checkbox-stacked-card',
                         'is-centered' => $isItemsCenter(),
                         'fi-invalid' => $errors->has($statePath),
                     ])

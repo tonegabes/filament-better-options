@@ -9,8 +9,8 @@ use Closure;
 use Filament\Forms\Components\Concerns\HasIcons;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Facades\Config;
 use ToneGabes\BetterOptions\Enums\ComponentStyles;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
 use ValueError;
 
 trait HasOptionIcon
@@ -110,20 +110,39 @@ trait HasOptionIcon
             return IconPosition::After;
         }
 
-        $position = Config::string(
-            'better-options.components.'
-            .$this->componentType->value
-            .'.'
-            .$this->componentStyle->value
-            .'.icon_position'
+        $position = $this->readComponentIconConfig(
+            $this->componentType,
+            $this->componentStyle,
+            'icon_position',
         );
 
         try {
-            $position = IconPosition::from($position);
+            return IconPosition::from((string) $position);
         } catch (ValueError $e) {
             return IconPosition::After;
         }
+    }
 
-        return $position;
+    /**
+     * Read a component-scoped icon setting from the package config.
+     *
+     * Extracted as a separate method so tests can override it without
+     * touching the Laravel Config facade.
+     */
+    protected function readComponentIconConfig(
+        ComponentTypes $type,
+        ComponentStyles $style,
+        string $setting,
+    ): ?string {
+        $key = sprintf(
+            'better-options.components.%s.%s.%s',
+            $type->value,
+            $style->value,
+            $setting,
+        );
+
+        $value = function_exists('config') ? config($key) : null;
+
+        return is_string($value) ? $value : null;
     }
 }

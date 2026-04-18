@@ -13,7 +13,10 @@ use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
 use ToneGabes\BetterOptions\Enums\ComponentStyles;
 use ToneGabes\BetterOptions\Enums\ComponentTypes;
 
-class CheckboxList extends BaseCheckboxList
+/**
+ * Checkbox list rendered as a responsive table layout.
+ */
+class CheckboxTable extends BaseCheckboxList
 {
     use HasBetterDescriptions;
     use HasExtraTexts;
@@ -21,13 +24,13 @@ class CheckboxList extends BaseCheckboxList
     use HasOptionColor;
     use HasOptionIcon;
 
-    protected string $view = 'better-options::components.checkbox.list';
+    protected string $view = 'better-options::components.checkbox.table';
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->setComponentType(ComponentTypes::Checkbox);
-        $this->setComponentStyle(ComponentStyles::List);
+        $this->setComponentStyle(ComponentStyles::Table);
     }
 }

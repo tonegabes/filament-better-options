@@ -8,54 +8,84 @@ use BackedEnum;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Support\Htmlable;
+use InvalidArgumentException;
 use ToneGabes\BetterOptions\Enums\ComponentTypes;
 use ToneGabes\BetterOptions\Forms\IndicatorsIconAlias;
-use ToneGabes\Filament\Icons\Enums\Phosphor;
 
 class IconManagerService
 {
+    /**
+     * Resolve the default idle or selected indicator icon for the given component type.
+     *
+     * @param  'idle'|'selected'  $state
+     */
     public static function resolveIndicatorIcon(?ComponentTypes $componentType, string $state): string|BackedEnum|Htmlable
     {
-        return match ($componentType) {
-            ComponentTypes::Checkbox => match ($state) {
-                'selected' => self::resolveIcon(
-                    Phosphor::CheckSquareFill->getLabel(),
-                    IndicatorsIconAlias::CHECKBOX_SELECTED
-                ),
-                default => self::resolveIcon(
-                    Phosphor::SquareThin->getLabel(),
-                    IndicatorsIconAlias::CHECKBOX_IDLE
-                ),
-
-            },
-            ComponentTypes::Radio => match ($state) {
-                'selected' => self::resolveIcon(
-                    Phosphor::CheckCircleFill->getLabel(),
-                    IndicatorsIconAlias::RADIO_SELECTED
-                ),
-                default => self::resolveIcon(
-                    Phosphor::CircleThin->getLabel(),
-                    IndicatorsIconAlias::RADIO_IDLE
-                ),
-            },
-            default => throw new \InvalidArgumentException("Unknown component type: {$componentType}"),
-        };
-    }
-
-    public static function resolveIcon(string $icon, string $alias): string|BackedEnum|Htmlable
-    {
-        if (filled($alias)) {
-            $icon = FilamentIcon::resolve($alias) ?: $icon;
+        if ($componentType === null) {
+            throw new InvalidArgumentException(
+                'Cannot resolve an indicator icon because the component type was not set. Did you forget to call setComponentType()?'
+            );
         }
 
-        if ($icon instanceof HasLabel) {
+        [$fallbackKey, $alias] = self::mapTypeAndState($componentType, $state);
+
+        $default = IconResolverService::default($fallbackKey);
+
+        return self::resolveIcon($default, $alias);
+    }
+
+    /**
+     * Resolve an icon value through the Filament icon alias system.
+     *
+     * The caller provides a sensible default (string, BackedEnum or Htmlable); when the alias
+     * is registered via `FilamentIcon::register()` the registered value wins.
+     */
+    public static function resolveIcon(string|BackedEnum|Htmlable $icon, string $alias): string|BackedEnum|Htmlable
+    {
+        if (filled($alias)) {
+            $resolved = FilamentIcon::resolve($alias);
+
+            if (filled($resolved)) {
+                $icon = $resolved;
+            }
+        }
+
+        if ($icon instanceof BackedEnum && $icon instanceof HasLabel) {
             return $icon->getLabel();
         }
 
         if ($icon instanceof BackedEnum) {
-            return $icon->value;
+            return (string) $icon->value;
         }
 
         return $icon;
+    }
+
+    /**
+     * Map a component type + state pair to a resolver key and a Filament icon alias.
+     *
+     * @param  'idle'|'selected'  $state
+     * @return array{0: string, 1: string}
+     */
+    protected static function mapTypeAndState(ComponentTypes $componentType, string $state): array
+    {
+        return match (true) {
+            $componentType === ComponentTypes::Checkbox && $state === 'selected' => [
+                IconResolverService::KEY_CHECKBOX_SELECTED,
+                IndicatorsIconAlias::CHECKBOX_SELECTED,
+            ],
+            $componentType === ComponentTypes::Checkbox => [
+                IconResolverService::KEY_CHECKBOX_IDLE,
+                IndicatorsIconAlias::CHECKBOX_IDLE,
+            ],
+            $componentType === ComponentTypes::Radio && $state === 'selected' => [
+                IconResolverService::KEY_RADIO_SELECTED,
+                IndicatorsIconAlias::RADIO_SELECTED,
+            ],
+            default => [
+                IconResolverService::KEY_RADIO_IDLE,
+                IndicatorsIconAlias::RADIO_IDLE,
+            ],
+        };
     }
 }

@@ -9,11 +9,10 @@ use Closure;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Enums\IconPosition;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Facades\Config;
-use ToneGabes\BetterOptions\Enums\ComponentTypes;
 use ToneGabes\BetterOptions\Enums\ComponentStyles;
+use ToneGabes\BetterOptions\Enums\ComponentTypes;
 use ToneGabes\BetterOptions\Services\IconManagerService;
-use ToneGabes\Filament\Icons\Enums\Phosphor;
+use ToneGabes\BetterOptions\Services\IconResolverService;
 use ValueError;
 
 trait HasIndicator
@@ -136,22 +135,40 @@ trait HasIndicator
             return IconPosition::Before;
         }
 
-        $position = Config::string(
-            'better-options.components.'
-            .$this->componentType->value
-            .'.'
-            .$this->componentStyle->value
-            .'.indicator_position'
+        $position = $this->readComponentConfig(
+            $this->componentType,
+            $this->componentStyle,
+            'indicator_position',
         );
 
         try {
-            $position = IconPosition::from($position);
+            return IconPosition::from((string) $position);
         } catch (ValueError $e) {
             return IconPosition::Before;
         }
+    }
 
-        return $position;
+    /**
+     * Read a component-scoped setting from the package config.
+     *
+     * Extracted as a separate method so tests can override it without
+     * touching the Laravel Config facade.
+     */
+    protected function readComponentConfig(
+        ComponentTypes $type,
+        ComponentStyles $style,
+        string $setting,
+    ): ?string {
+        $key = sprintf(
+            'better-options.components.%s.%s.%s',
+            $type->value,
+            $style->value,
+            $setting,
+        );
 
+        $value = function_exists('config') ? config($key) : null;
+
+        return is_string($value) ? $value : null;
     }
 
     public function getDefaultIdleIndicator(): string|BackedEnum|Htmlable
@@ -164,15 +181,21 @@ trait HasIndicator
         return IconManagerService::resolveIndicatorIcon($this->componentType, 'selected');
     }
 
-    protected function getFallbackIdleIndicator(): string
+    protected function getFallbackIdleIndicator(): string|BackedEnum|Htmlable
     {
-        return Phosphor::Acorn->getLabel();
-        // return $this->componentType === 'checkbox' ? '☐' : '○';
+        $key = $this->componentType === ComponentTypes::Checkbox
+            ? IconResolverService::KEY_CHECKBOX_IDLE
+            : IconResolverService::KEY_RADIO_IDLE;
+
+        return IconResolverService::default($key);
     }
 
-    protected function getFallbackSelectedIndicator(): string
+    protected function getFallbackSelectedIndicator(): string|BackedEnum|Htmlable
     {
-        return Phosphor::AcornFill->getLabel();
-        // return $this->componentType === 'checkbox' ? '☑' : '●';
+        $key = $this->componentType === ComponentTypes::Checkbox
+            ? IconResolverService::KEY_CHECKBOX_SELECTED
+            : IconResolverService::KEY_RADIO_SELECTED;
+
+        return IconResolverService::default($key);
     }
 }

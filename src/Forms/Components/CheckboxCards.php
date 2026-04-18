@@ -10,6 +10,7 @@ use ToneGabes\BetterOptions\Concerns\HasBetterDescriptions;
 use ToneGabes\BetterOptions\Concerns\HasExtraTexts;
 use ToneGabes\BetterOptions\Concerns\HasIndicator;
 use ToneGabes\BetterOptions\Concerns\HasItemsCenter;
+use ToneGabes\BetterOptions\Concerns\HasOptionColor;
 use ToneGabes\BetterOptions\Concerns\HasOptionIcon;
 use ToneGabes\BetterOptions\Enums\ComponentStyles;
 use ToneGabes\BetterOptions\Enums\ComponentTypes;
@@ -21,6 +22,7 @@ class CheckboxCards extends CheckboxList
     use HasExtraTexts;
     use HasIndicator;
     use HasItemsCenter;
+    use HasOptionColor;
     use HasOptionIcon;
 
     protected string $view = 'better-options::components.checkbox.cards';
@@ -34,7 +36,9 @@ class CheckboxCards extends CheckboxList
     }
 
     /**
-     * Aplicar configuração de tema pré-definido
+     * Apply a pre-defined theme configuration.
+     *
+     * Supported themes: `minimal`, `modern`, `classic`.
      */
     public function theme(string $theme): static
     {
@@ -47,7 +51,7 @@ class CheckboxCards extends CheckboxList
     }
 
     /**
-     * Aplicar tema minimal
+     * Apply the minimal theme: subtle indicator with icon after and indicator before.
      */
     protected function applyMinimalTheme(): static
     {
@@ -58,7 +62,7 @@ class CheckboxCards extends CheckboxList
     }
 
     /**
-     * Aplicar tema modern
+     * Apply the modern theme: icon before content, indicator after, items centered.
      */
     protected function applyModernTheme(): static
     {
@@ -69,7 +73,7 @@ class CheckboxCards extends CheckboxList
     }
 
     /**
-     * Aplicar tema classic
+     * Apply the classic theme: traditional layout with icon after and indicator before.
      */
     protected function applyClassicTheme(): static
     {
