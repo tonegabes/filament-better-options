@@ -20,14 +20,14 @@ flowchart LR
 
 ## Components
 
-Eight form components are provided, split in two families and four styles:
+Four form components are provided, split in two families and two styles:
 
-| Family   | List            | Cards           | StackedCards           | Table           |
-| -------- | --------------- | --------------- | ---------------------- | --------------- |
-| Checkbox | `CheckboxList`  | `CheckboxCards` | `CheckboxStackedCards` | `CheckboxTable` |
-| Radio    | `RadioList`     | `RadioCards`    | `RadioStackedCards`    | `RadioTable`    |
+| Family   | List            | Cards           |
+| -------- | --------------- | --------------- |
+| Checkbox | `CheckboxList`  | `CheckboxCards` |
+| Radio    | `RadioList`     | `RadioCards`    |
 
-Each component is a thin subclass of the Filament native `CheckboxList`/`Radio` (or a `Field` for `RadioCards`/`RadioStackedCards`/`RadioTable` where `HasColumns` is required) that applies additional traits and sets its view plus a pair of `{componentType, componentStyle}` for default resolution.
+Each component is a thin subclass of the Filament native `CheckboxList`/`Radio` (or a `Field` for `RadioCards` where `HasColumns` is required) that applies additional traits and sets its view plus a pair of `{componentType, componentStyle}` for default resolution.
 
 ## Traits (`src/Concerns/`)
 
@@ -45,7 +45,7 @@ All visibility toggles accept `Closure` evaluation via Filament's `evaluate()`.
 ## Enums (`src/Enums/`)
 
 - `ComponentTypes`: `Checkbox`, `Radio`.
-- `ComponentStyles`: `List`, `Cards`, `StackedCards`, `Table`.
+- `ComponentStyles`: `List`, `Cards`.
 
 These are used together by `IconManagerService`, `HasIndicator` and `HasOptionIcon` to look up configuration defaults like icon/indicator positions per `{componentType, componentStyle}` combination.
 
@@ -66,8 +66,6 @@ return [
         'checkbox' => [
             'list'          => [ 'icon_position' => 'after',  'indicator_position' => 'before' ],
             'cards'         => [ 'icon_position' => 'before', 'indicator_position' => 'after'  ],
-            'stacked_cards' => [ 'icon_position' => 'before', 'indicator_position' => 'after'  ],
-            'table'         => [ 'icon_position' => 'after',  'indicator_position' => 'before' ],
         ],
         'radio' => [ /* same shape */ ],
     ],
@@ -83,7 +81,7 @@ return [
 ## Blade views (`resources/views/components/`)
 
 - Shared subcomponents: `option-indicator`, `search-input`, `bulk-actions`, `checkbox/content`.
-- Per component: `checkbox/list.blade.php`, `checkbox/cards.blade.php`, `checkbox/stacked-cards.blade.php`, `checkbox/table.blade.php` and the radio counterparts.
+- Per component: `checkbox/list.blade.php`, `checkbox/cards.blade.php` and the radio counterparts.
 
 ## JavaScript (`resources/js/better-checkbox.js`)
 

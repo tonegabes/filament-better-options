@@ -22,14 +22,6 @@ return [
                 'icon_position'      => 'before',
                 'indicator_position' => 'after',
             ],
-            'stacked_cards' => [
-                'icon_position'      => 'before',
-                'indicator_position' => 'after',
-            ],
-            'table' => [
-                'icon_position'      => 'after',
-                'indicator_position' => 'before',
-            ],
         ],
         'radio' => [
             'list' => [
@@ -39,14 +31,6 @@ return [
             'cards' => [
                 'icon_position'      => 'before',
                 'indicator_position' => 'after',
-            ],
-            'stacked_cards' => [
-                'icon_position'      => 'before',
-                'indicator_position' => 'after',
-            ],
-            'table' => [
-                'icon_position'      => 'after',
-                'indicator_position' => 'before',
             ],
         ],
     ],

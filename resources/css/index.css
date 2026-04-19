@@ -1,12 +1,8 @@
 @import "tailwindcss";
 @import "checkbox-list.css";
 @import "checkbox-cards.css";
-@import "checkbox-stacked-cards.css";
-@import "checkbox-table.css";
 @import "radio-list.css";
 @import "radio-cards.css";
-@import "radio-stacked-cards.css";
-@import "radio-table.css";
 
 /* Filament uses class-based dark mode; match it so light/dark follow panel toggle */
 @custom-variant dark (&:where(.dark, .dark *));

@@ -3,14 +3,14 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
 [![Total Downloads](https://img.shields.io/packagist/dt/tonegabes/filament-better-options.svg?style=flat-square)](https://packagist.org/packages/tonegabes/filament-better-options)
 
-Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `CheckboxStackedCards`, `CheckboxTable`, `RadioList`, `RadioCards`, `RadioStackedCards` and `RadioTable` with icons, visual indicators, descriptions, extra texts, per-option colors, search functionality, and bulk operations.
+Enhanced form components for Filament Forms with modern interface, advanced features, and excellent performance. Provides `CheckboxList`, `CheckboxCards`, `RadioList` and `RadioCards` with icons, visual indicators, descriptions, extra texts, per-option colors, search functionality, and bulk operations.
 
 ## Available components
 
-| Family   | List             | Cards             | Stacked Cards              | Table              |
-| -------- | ---------------- | ----------------- | -------------------------- | ------------------ |
-| Checkbox | `CheckboxList`   | `CheckboxCards`   | `CheckboxStackedCards`     | `CheckboxTable`    |
-| Radio    | `RadioList`      | `RadioCards`      | `RadioStackedCards`        | `RadioTable`       |
+| Family   | List             | Cards             |
+| -------- | ---------------- | ----------------- |
+| Checkbox | `CheckboxList`   | `CheckboxCards`   |
+| Radio    | `RadioList`      | `RadioCards`      |
 
 ## Features
 
@@ -418,12 +418,8 @@ CheckboxCards::make('options')
 | ---------------------- | ----------------------------------------- | -------------------------------------------------- |
 | `CheckboxList`         | Vertical list of checkboxes               | Search, Bulk toggle, Icons                         |
 | `CheckboxCards`        | Grid of checkbox cards                    | All list features + Columns, Centering             |
-| `CheckboxStackedCards` | Vertically stacked checkbox cards         | All cards features with joined borders             |
-| `CheckboxTable`        | Checkbox options in a responsive table    | Search, Bulk toggle, Icons                         |
 | `RadioList`            | Vertical list of radio buttons            | Extends native `Radio`, icons, custom indicators   |
 | `RadioCards`           | Grid of radio button cards                | All list features + Columns, Centering, Themes     |
-| `RadioStackedCards`    | Vertically stacked radio cards            | All cards features with joined borders             |
-| `RadioTable`           | Radio options in a responsive table       | Icons, indicators                                  |
 
 ### Color by enum
 
@@ -432,9 +428,9 @@ Every component supports a per-option color. When the associated enum implements
 to tint its option:
 
 ```php
-use ToneGabes\BetterOptions\Forms\Components\CheckboxStackedCards;
+use ToneGabes\BetterOptions\Forms\Components\CheckboxCards;
 
-CheckboxStackedCards::make('roles')
+CheckboxCards::make('roles')
     ->options(RolesEnum::class);
 ```
 

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- `CheckboxStackedCards` and `RadioStackedCards` components and `ComponentStyles::StackedCards`.
+- `CheckboxTable` and `RadioTable` components and `ComponentStyles::Table`.
+
 ## [1.1.0] - 2026-04-18
 
 ### Added
